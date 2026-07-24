@@ -1,0 +1,75 @@
+dbug: 24/07/2026 21:54:16.047 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+          "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+          "ProductVersion" TEXT NOT NULL
+      );
+dbug: 24/07/2026 21:54:16.065 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+dbug: 24/07/2026 21:54:16.071 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+dbug: 24/07/2026 21:54:16.135 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "Role" (
+          "RoleId" INTEGER NOT NULL CONSTRAINT "PK_Role" PRIMARY KEY AUTOINCREMENT,
+          "Name" TEXT NOT NULL,
+          "CreatedAt" TEXT NOT NULL,
+          "UpdatedAt" TEXT NOT NULL
+      );
+dbug: 24/07/2026 21:54:16.137 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "User" (
+          "UserId" TEXT NOT NULL CONSTRAINT "PK_User" PRIMARY KEY,
+          "Email" TEXT NOT NULL,
+          "Name" TEXT NOT NULL,
+          "Password" TEXT NOT NULL,
+          "CreatedAt" TEXT NOT NULL,
+          "UpdatedAt" TEXT NOT NULL,
+          "RoleId" INTEGER NULL,
+          CONSTRAINT "FK_User_Role_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Role" ("RoleId") ON DELETE SET NULL
+      );
+dbug: 24/07/2026 21:54:16.142 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "Category" (
+          "CategoryId" INTEGER NOT NULL CONSTRAINT "PK_Category" PRIMARY KEY AUTOINCREMENT,
+          "Name" TEXT NOT NULL,
+          "ColorCode" TEXT NOT NULL,
+          "Description" TEXT NULL,
+          "CreatedAt" TEXT NOT NULL,
+          "UpdatedAt" TEXT NOT NULL,
+          "UserId" TEXT NOT NULL,
+          CONSTRAINT "FK_Category_User_UserId" FOREIGN KEY ("UserId") REFERENCES "User" ("UserId") ON DELETE SET NULL
+      );
+dbug: 24/07/2026 21:54:16.143 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE "TaskItem" (
+          "TaskId" INTEGER NOT NULL CONSTRAINT "PK_TaskItem" PRIMARY KEY AUTOINCREMENT,
+          "Name" TEXT NOT NULL,
+          "Description" TEXT NULL,
+          "Starred" INTEGER NOT NULL,
+          "Priority" INTEGER NOT NULL,
+          "CreatedAt" TEXT NOT NULL,
+          "UpdatedAt" TEXT NOT NULL,
+          "CategoryId" INTEGER NOT NULL,
+          CONSTRAINT "FK_TaskItem_Category_CategoryId" FOREIGN KEY ("CategoryId") REFERENCES "Category" ("CategoryId") ON DELETE CASCADE
+      );
+dbug: 24/07/2026 21:54:16.145 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_Category_UserId" ON "Category" ("UserId");
+dbug: 24/07/2026 21:54:16.146 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_TaskItem_CategoryId" ON "TaskItem" ("CategoryId");
+dbug: 24/07/2026 21:54:16.147 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX "IX_User_RoleId" ON "User" ("RoleId");
+dbug: 24/07/2026 21:54:16.149 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+      VALUES ('20260724195354_Intitalizing_db', '10.0.10');
+dbug: 24/07/2026 21:54:16.152 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      DELETE FROM "__EFMigrationsLock";
