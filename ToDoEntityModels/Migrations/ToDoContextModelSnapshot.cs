@@ -47,7 +47,7 @@ namespace ToDoEntityModels.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ToDoEntityModels.Models.Role", b =>
@@ -69,7 +69,7 @@ namespace ToDoEntityModels.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("ToDoEntityModels.Models.TaskItem", b =>
@@ -104,7 +104,7 @@ namespace ToDoEntityModels.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("TaskItem");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("ToDoEntityModels.Models.User", b =>
@@ -138,7 +138,7 @@ namespace ToDoEntityModels.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ToDoEntityModels.Models.Category", b =>

@@ -4,8 +4,13 @@ using ToDoEntityModels.Models;
 
 namespace ToDoEntityModels.DataContexts;
 
-public class ToDoContext(): DbContext
+public class ToDoContext: DbContext
 {
+    public ToDoContext() { }
+    public DbSet<User> Users {  get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<TaskItem> Tasks { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string dbFile = "todo.db";
@@ -26,7 +31,6 @@ public class ToDoContext(): DbContext
             [Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting]
             );
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>(entity =>
