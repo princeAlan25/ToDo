@@ -10,12 +10,12 @@ public static class ToDoContextExtension
 {
     public static IServiceCollection AddToDoContextService(
         this IServiceCollection services,
-        string databaseFile = "todo.db"
+        string databaseFile = "ToDo.db"
         )
     {
         string dbFile = databaseFile;
-        string dbPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Database"));
-        string fullDbPath = Path.GetFullPath(Path.Combine(dbPath, dbFile));
+        string dbPath = "Database";
+        string fullDbPath = Path.Combine(AppContext.BaseDirectory,"..", "..", "..", "..", dbPath, dbFile);
         services.AddDbContext<ToDoContext>(options =>
         {
             options.UseSqlite($"Data Source={fullDbPath}");

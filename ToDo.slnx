@@ -1,5 +1,4 @@
 <Solution>
-  <Project Path="ToDo.Interfaces/ToDo.Interfaces.csproj" Id="53ffd91c-f9b5-4993-ba3f-6a8e9dc00c9d" />
   <Project Path="ToDoApi/ToDoApi.csproj" />
   <Project Path="ToDoEntityModels/ToDoEntityModels.csproj" />
 </Solution>

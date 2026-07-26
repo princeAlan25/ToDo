@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using ToDoEntityModels.Models;
 
 namespace ToDoEntityModels.DataContexts;
@@ -7,29 +6,39 @@ namespace ToDoEntityModels.DataContexts;
 public class ToDoContext: DbContext
 {
     public ToDoContext() { }
+    public ToDoContext(DbContextOptions options) : base(options) { }
     public DbSet<User> Users {  get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<TaskItem> Tasks { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string dbFile = "todo.db";
-        string dbPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "Database"));
-        string fullDbPath = Path.GetFullPath(Path.Combine(dbPath, dbFile));
+        // Use an absolute path inside the app's base directory so EF Core can always find the DB file
+        string dbFile = "ToDo.db";
+        string dbPath = "Database";
+        string fullDbPath = Path.Combine(AppContext.BaseDirectory, "..","..", "..", "..", dbPath, dbFile);
         if (!optionsBuilder.IsConfigured)
         {
-            if (!Directory.Exists(fullDbPath))
+            string fullDbFolder = Path.GetDirectoryName(fullDbPath) ?? Path.Combine(AppContext.BaseDirectory, dbPath);
+            if (!Directory.Exists(fullDbFolder))
             {
-                Console.WriteLine($"Creating a Missing database file {dbFile}");
-                Directory.CreateDirectory(dbPath);
-                File.Create(fullDbPath);
+                Console.WriteLine($"Creating missing database folder: {fullDbFolder}");
+                Directory.CreateDirectory(fullDbFolder);
+            }
+
+            if (!File.Exists(fullDbPath))
+            {
+                Console.WriteLine($"Creating missing database file: {fullDbPath}");
+                // Create and dispose the file stream immediately
+                using (File.Create(fullDbPath)) { }
             }
         }
+
         optionsBuilder.UseSqlite($"Data Source={fullDbPath}");
         optionsBuilder.LogTo(
             ContextLogger.LoggContext,
             [Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting]
-            );
+        );
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

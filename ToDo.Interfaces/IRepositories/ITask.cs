@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ToDoEntityModels.Models;
 
-namespace ToDo.Interfaces;
+namespace ToDo.Interfaces.IRepositories;
 
 public interface ITask
 {

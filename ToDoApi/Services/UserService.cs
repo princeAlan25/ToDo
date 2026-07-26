@@ -1,57 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ToDo.Interfaces;
-using ToDoEntityModels.DataContexts;
+﻿using ToDoApi.IIntermediators;
+using ToDoApi.IRepositories;
 using ToDoEntityModels.Models;
 
 namespace ToDoApi.Services;
 
-public class UserService(ToDoContext db, ILogger<UserService> logger) : IUser
+public class UserService(IUser userRepo): IUserIntermediator
 {
-    private readonly ToDoContext _db = db;
-    public Task<User> CreateUserAsync(User user)
+    private readonly IUser _userRepo = userRepo;
+    public IResult GetUserByIdAsync(string userId)
     {
-        ArgumentNullException.ThrowIfNull(user);
-        _db.Users.AddAsync(user);
-        _db.SaveChangesAsync();
-        return Task.FromResult(user);
+        Guid id = Guid.Parse(userId);
+        User? user = _userRepo.GetUserById(id).Result;
+        if (user == null) return Results.NotFound($"User {userId} not found");
+        return Results.Ok(user);
     }
 
-    public Task DeleteUserAsync(Guid userId)
+    public IResult DeleteUserAsync(string userId)
     {
-        if(userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
-        User userExist = _db.Users.First(u => u.UserId == userId);
-        if (userExist == null)
-        {
-            logger.LogCritical($"{nameof(userExist)} does not exist");
-        }
-        else
-        {
-            _db.Users.Remove(userExist);
-            _db.SaveChangesAsync();
-        }
-        return Task.CompletedTask;
+        Guid id = Guid.Parse(userId);
+        bool result = _userRepo.DeleteUserAsync(id).Result;
+        if(result) return Results.Ok(result);
+        return Results.NotFound($"User {userId} not found");
     }
 
-    public async Task<User?> GetUserById(Guid userId)
+    public IResult UpdateUserAsync(User user)
     {
-        if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
-        User? foundUser = await _db.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-        if(foundUser == null) logger.LogCritical($"user {userId} does not exist");
-        return foundUser ?? null;
+        User result = _userRepo.CreateUserAsync(user).Result;
+        if (result == null) return Results.Problem($"can not update {user.UserId}");
+        return Results.Accepted(value: user);
     }
 
-    public async Task<User> UpdateUserAsync(User user)
+    public IResult CreateUserAsync(User user)
     {
-        if (user == null) throw new ArgumentNullException(nameof(user));
-        try
-        {
-            _db.Entry<User>(user).CurrentValues.SetValues(user);
-            await _db.SaveChangesAsync();
-        }
-        catch(Exception ex)
-        {
-            logger.LogError($"{nameof(user)} does not exist or operation failed");
-        }
-        return user;
+        User result = _userRepo.CreateUserAsync(user).Result;
+        if (result == null) return Results.Problem($"Can not register user {user.UserId}");
+        return Results.Created("/users/",value: result);
     }
 }

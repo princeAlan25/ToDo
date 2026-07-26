@@ -1,6 +1,19 @@
-@ToDoApi_HostAddress = http://localhost:5032
+@ToDoApi_HostAddress = https://localhost:7092
 
-GET {{ToDoApi_HostAddress}}/weatherforecast/
+###
+
+POST {{ToDoApi_HostAddress}}/users
+Content-Type: application/json
+{
+  "Email": "prince.alain.loui@gmail.com",
+  "Name": "Prince alan",
+  "Password": "Prince123"
+}
+
+###
+
+GET {{ToDoApi_HostAddress}}/users/
 Accept: application/json
+
 
 ###

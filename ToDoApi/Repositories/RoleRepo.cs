@@ -1,6 +1,6 @@
 ﻿namespace ToDoApi.Services
 {
-    public class CategoryService
+    public class RoleRepo
     {
     }
 }

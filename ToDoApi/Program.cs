@@ -1,3 +1,8 @@
+using ToDoApi.EndPoints;
+using ToDoApi.IIntermediators;
+using ToDoApi.IRepositories;
+using ToDoApi.Repositories;
+using ToDoApi.Services;
 using ToDoEntityModels.DataContexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddToDoContextService();
+builder.Services.AddProblemDetails();
+
+//services registration
+builder.Services.AddTransient<IUser, UserRepo>();
+builder.Services.AddTransient<IUserIntermediator, UserService>();
 
 var app = builder.Build();
 
@@ -18,28 +28,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/", () =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    return "Welcome to the api";
+});
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+//endpoints mapping
+app.MapUserEndPoints();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
