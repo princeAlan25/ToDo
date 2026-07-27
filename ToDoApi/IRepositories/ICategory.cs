@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ToDoEntityModels.Models;
 
-namespace ToDo.Interfaces.IRepositories;
+namespace ToDoApi.IRepositories;
 
 public interface ICategory
 {

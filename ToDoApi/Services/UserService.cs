@@ -36,4 +36,6 @@ public class UserService(IUser userRepo): IUserIntermediator
         if (result == null) return Results.Problem($"Can not register user {user.UserId}");
         return Results.Created("/users/",value: result);
     }
+
+
 }

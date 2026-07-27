@@ -8,4 +8,5 @@ public interface IUser
     public Task<User> UpdateUserAsync(User user);
     public Task<User?> GetUserById(Guid userId);
     public Task<bool> DeleteUserAsync(Guid userId);
+    public Task<User?> GetUserByEmailAsync(string email);
 }

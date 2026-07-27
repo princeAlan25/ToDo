@@ -15,7 +15,6 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
         user.Password = Securit.HashPassword(user.Password);
         _db.Users.AddAsync(user);
         _db.SaveChangesAsync();
-        Console.WriteLine($"Writing to: {Path.GetFullPath(_db.Database.GetDbConnection().DataSource)}");
         return Task.FromResult(user);
     }
 
@@ -25,7 +24,6 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
         User userExist = _db.Users.First(u => u.UserId == userId);
         if (userExist == null)
         {
-            logger.LogCritical($"{nameof(userExist)} does not exist");
             return Task.FromResult(false);
         }
         _db.Users.Remove(userExist);
@@ -33,11 +31,17 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
         return Task.FromResult(true);
     }
 
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(email);
+        User? foundUser = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return foundUser ?? null;
+    }
+
     public async Task<User?> GetUserById(Guid userId)
     {
         if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
         User? foundUser = await _db.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-        if(foundUser == null) logger.LogCritical($"user {userId} does not exist");
         return foundUser ?? null;
     }
 
