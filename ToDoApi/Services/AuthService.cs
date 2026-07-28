@@ -10,7 +10,7 @@ using ToDoApi.Utilities;
 
 namespace ToDoApi.Services;
 
-public class AuthService(IConfiguration config, IUser userRepo) : IAuthentication
+public class AuthService(IConfiguration config, IUserRepository userRepo) : IAuthentication
 {
     public IResult SignIn(LoginUserDto loginUserRequest)
     {
@@ -27,7 +27,7 @@ public class AuthService(IConfiguration config, IUser userRepo) : IAuthenticatio
         request.Email = createUserRequest.Email;
         request.Password = createUserRequest.Password;
         request.Name = createUserRequest.Name;
-        User user = userRepo.CreateUserAsync(request).Result;
+        UserDto user = userRepo.CreateUserAsync(request).Result;
         if (user is null) return Results.BadRequest("Signup failed");
         return Results.Redirect("/auth/login");
     }

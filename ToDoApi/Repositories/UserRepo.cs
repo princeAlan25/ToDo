@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ToDoApi.DTOs;
 using ToDoApi.IRepositories;
 using ToDoApi.Utilities;
 using ToDoEntityModels.DataContexts;
@@ -6,16 +7,25 @@ using ToDoEntityModels.Models;
 
 namespace ToDoApi.Repositories;
 
-public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
+public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUserRepository
 {
     private readonly ToDoContext _db = db;
-    public Task<User> CreateUserAsync(User user)
+    public Task<UserDto> CreateUserAsync(User user)
     {
         ArgumentNullException.ThrowIfNull(user);
         user.Password = Securit.HashPassword(user.Password);
         _db.Users.AddAsync(user);
         _db.SaveChangesAsync();
-        return Task.FromResult(user);
+        UserDto createdUser = new(
+            user.UserId,
+            user.Email,
+            user.Name,
+            user.Role,
+            [.. user.Categories],
+            user.CreatedAt,
+            user.UpdatedAt
+            );
+        return Task.FromResult(createdUser);
     }
 
     public Task<bool> DeleteUserAsync(Guid userId)
@@ -38,14 +48,23 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
         return foundUser ?? null;
     }
 
-    public async Task<User?> GetUserById(Guid userId)
+    public async Task<UserDto?> GetUserById(Guid userId)
     {
         if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId));
-        User? foundUser = await _db.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-        return foundUser ?? null;
+        User? foundUser = await _db.Users.Include(u => u.Role).Include(u => u.Categories).FirstOrDefaultAsync(u => u.UserId == userId);
+        if (foundUser == null) return null;
+        return new UserDto(
+            foundUser.UserId,
+            foundUser.Email,
+            foundUser.Name,
+            foundUser.Role,
+            [..foundUser.Categories],
+            foundUser.CreatedAt,
+            foundUser.UpdatedAt
+            );
     }
 
-    public async Task<User> UpdateUserAsync(User user)
+    public async Task<UserDto> UpdateUserAsync(User user)
     {
         if (user == null) throw new ArgumentNullException(nameof(user));
         try
@@ -57,6 +76,15 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUser
         {
             logger.LogError($"{nameof(user)} does not exist or operation failed");
         }
-        return user;
+        UserDto updatedUser = new(
+            user.UserId,
+            user.Email,
+            user.Name,
+            user.Role,
+            [.. user.Categories],
+            user.CreatedAt,
+            user.UpdatedAt
+            );
+        return updatedUser;
     }
 }

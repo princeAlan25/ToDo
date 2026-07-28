@@ -7,6 +7,7 @@ using ToDoApi.Services;
 using ToDoEntityModels.DataContexts;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,14 +29,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
-
 builder.Services.AddAuthorization();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme { Name = "Bearer" });
+});
 
 builder.Services.AddToDoContextService();
 builder.Services.AddProblemDetails();
 
 //services registration
-builder.Services.AddTransient<IUser, UserRepo>();
+builder.Services.AddTransient<IUserRepository, UserRepo>();
 builder.Services.AddTransient<IUserIntermediator, UserService>();
 
 var app = builder.Build();
@@ -45,6 +49,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.UseExceptionHandler();
+    app.UseSwagger().UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

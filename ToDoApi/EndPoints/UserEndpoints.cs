@@ -22,7 +22,7 @@ public static partial class Program
                     Name = user.Name,
                     Password = user.Password
                 };
-                service.CreateUserAsync(createdUser);
+                return service.CreateUserAsync(createdUser);
             });
 
         app.MapPut(
