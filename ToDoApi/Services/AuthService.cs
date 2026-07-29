@@ -14,22 +14,28 @@ public class AuthService(IConfiguration config, IUserRepository userRepo) : IAut
 {
     public IResult SignIn(LoginUserDto loginUserRequest)
     {
-        Validator.ValidateUserSignIn(loginUserRequest);
+        if(Validator.ValidateUserSignIn(loginUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignIn(loginUserRequest));
         User? user = userRepo.GetUserByEmailAsync(loginUserRequest.email).Result;
         if (user == null || !Securit.VerifyPassword(loginUserRequest.password, user.Password)) return Results.Unauthorized();
-        return Results.Ok(GenerateAuthToken(user.UserId, user.Name));
+        return Results.Ok(new
+        {
+            AccessToken = GenerateAuthToken(user.UserId, user.Name),
+            TokenType = "Bearer"
+        });
     }
 
     public IResult SignUp(CreateUserDto createUserRequest)
     {
-        Validator.ValidateUserSignUp(createUserRequest);
-        User request = new User();
-        request.Email = createUserRequest.Email;
-        request.Password = createUserRequest.Password;
-        request.Name = createUserRequest.Name;
+        if(Validator.ValidateUserSignUp(createUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignUp(createUserRequest));
+        User request = new()
+        {
+            Email = createUserRequest.Email,
+            Password = createUserRequest.Password,
+            Name = createUserRequest.Name
+        };
         UserDto user = userRepo.CreateUserAsync(request).Result;
         if (user is null) return Results.BadRequest("Signup failed");
-        return Results.Redirect("/auth/login");
+        return Results.Created("/user", user);
     }
 
     private string GenerateAuthToken(Guid userId, string userName)
@@ -41,10 +47,10 @@ public class AuthService(IConfiguration config, IUserRepository userRepo) : IAut
             new Claim(ClaimTypes.Name, userName)
             ];
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? throw new SecurityTokenInvalidSigningKeyException()));
-            SigningCredentials cridentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? throw new SecurityTokenInvalidSigningKeyException()));
+            SigningCredentials cridentials = new(key, SecurityAlgorithms.HmacSha256);
 
-            JwtSecurityToken token = new JwtSecurityToken(
+            JwtSecurityToken token = new(
                 issuer: config["Jwt:Issuer"],
                 audience: config["Jwt:Audience"],
                 claims: claims,

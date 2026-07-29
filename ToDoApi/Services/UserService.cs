@@ -35,8 +35,7 @@ public class UserService(IUserRepository userRepo): IUserIntermediator
     {
         UserDto result = _userRepo.CreateUserAsync(user).Result;
         if (result == null) return Results.Problem($"Can not register user {user.UserId}");
-        return Results.Created("/users/",value: result);
+        return Results.Created<UserDto>("/auth/signup",value: result);
     }
-
 
 }

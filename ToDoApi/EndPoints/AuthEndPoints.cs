@@ -1,0 +1,29 @@
+﻿
+using ToDoApi.DTOs;
+using ToDoApi.IIntermediators;
+using ToDoApi.IRepositories;
+
+namespace ToDoApi.EndPoints;
+
+public static partial class Program
+{
+    public static void MapAuthenticationEndPoints(this WebApplication app)
+    {
+        RouteGroupBuilder authEndPointBuilder = app.MapGroup("/auth").WithTags("Authentication EndPoints");
+
+        authEndPointBuilder.MapPost(
+        pattern: "/signup",
+        handler: (IAuthentication authService, CreateUserDto signUpReqeust) =>
+        {
+            return authService.SignUp(signUpReqeust);
+        }).WithName("SignUp");
+
+        authEndPointBuilder.MapPost(
+            pattern: "/login",
+            handler: (IAuthentication authService ,LoginUserDto loginReqeust) =>
+            {
+                return authService.SignIn(loginReqeust);
+            }).WithName("SignIn");
+
+    }
+}

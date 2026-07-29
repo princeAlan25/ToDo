@@ -1,4 +1,5 @@
-﻿using ToDoApi.DTOs;
+﻿using System.Security.Claims;
+using ToDoApi.DTOs;
 using ToDoApi.IIntermediators;
 using ToDoEntityModels.Models;
 
@@ -8,13 +9,21 @@ public static partial class Program
 {
     public static void MapUserEndPoints(this WebApplication app)
     {
-        app.MapGet(
-            pattern: "/users/{userId}",
-            handler: (IUserIntermediator service, string userId) => service.GetUserByIdAsync(userId));
+        RouteGroupBuilder userEndPointBuilder = app.MapGroup("/user").WithTags("User Management EndPoints");
+        userEndPointBuilder.MapGet(
+            pattern: "/",
+            handler: (IUserIntermediator service, ClaimsPrincipal user) =>
+            {
+                string? userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrWhiteSpace(userId)) return Results.Unauthorized();
+                return service.GetUserByIdAsync(userId);
+            })
+            .RequireAuthorization("authenticated")
+            .WithName("Get User By Id");
 
-        app.MapPost(
-            pattern: "/users",
-            handler: async (IUserIntermediator service, CreateUserDto user) => 
+        userEndPointBuilder.MapPost(
+            pattern: "/",
+            handler: async (IUserIntermediator service, CreateUserDto user) =>
             {
                 User createdUser = new()
                 {
@@ -23,14 +32,18 @@ public static partial class Program
                     Password = user.Password
                 };
                 return service.CreateUserAsync(createdUser);
-            });
+            }).WithName("Create User");
 
-        app.MapPut(
-            pattern: "/users",
-            handler: (IUserIntermediator service, User user) => service.UpdateUserAsync(user));
+        userEndPointBuilder.MapPut(
+            pattern: "/",
+            handler: (IUserIntermediator service, User user) => service.UpdateUserAsync(user))
+            .RequireAuthorization("authenticated")
+            .WithName("Update User");
 
-        app.MapDelete(
-            pattern: "/users/{userId}",
-            handler: (IUserIntermediator service, string userId) => service.DeleteUserAsync(userId));
+        userEndPointBuilder.MapDelete(
+            pattern: "/{userId}",
+            handler: (IUserIntermediator service, string userId) => service.DeleteUserAsync(userId))
+            .RequireAuthorization("authenticated")
+            .WithName("Delete User");
     }
 }

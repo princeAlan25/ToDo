@@ -1,0 +1,11 @@
+dbug: 29/07/2026 13:34:01.135 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@userId='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SELECT "u"."UserId", "u"."CreatedAt", "u"."Email", "u"."Name", "u"."Password", "u"."RoleId", "u"."UpdatedAt"
+      FROM "Users" AS "u"
+      WHERE "u"."UserId" = @userId
+      LIMIT 1
+dbug: 29/07/2026 13:34:01.188 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p0='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      DELETE FROM "Users"
+      WHERE "UserId" = @p0
+      RETURNING 1;
