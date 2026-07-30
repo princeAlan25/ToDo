@@ -57,10 +57,14 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddToDoContextService();
 builder.Services.AddProblemDetails();
 
-//services registration
+//Repositories registration
 builder.Services.AddTransient<IUserRepository, UserRepo>();
+builder.Services.AddTransient<IRoleRepository, RoleRepo>();
+
+//intermediators/services registration
 builder.Services.AddTransient<IUserIntermediator, UserService>();
 builder.Services.AddTransient<IAuthentication, AuthService>();
+builder.Services.AddTransient<IRoleIntermediator, RoleService>();
 
 var app = builder.Build();
 
@@ -78,5 +82,6 @@ app.UseAuthentication().UseAuthorization();
 app.MapGet("/", () => "Welcome to the api");
 app.MapAuthenticationEndPoints();
 app.MapUserEndPoints();
+app.MapRoleEndPoints();
 
 app.Run();

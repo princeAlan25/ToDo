@@ -1,0 +1,5 @@
+dbug: 30/07/2026 20:20:39.826 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (Size = 5), @p2='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Roles" ("CreatedAt", "Name", "UpdatedAt")
+      VALUES (@p0, @p1, @p2)
+      RETURNING "RoleId";

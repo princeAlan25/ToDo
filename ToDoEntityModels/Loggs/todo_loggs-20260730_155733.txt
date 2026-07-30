@@ -1,0 +1,57 @@
+dbug: 30/07/2026 15:57:33.149 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+dbug: 30/07/2026 15:57:33.194 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2026-07-30 13:57:33.1848975+00:00');
+      SELECT changes();
+dbug: 30/07/2026 15:57:33.360 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+          "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+          "ProductVersion" TEXT NOT NULL
+      );
+dbug: 30/07/2026 15:57:33.387 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+dbug: 30/07/2026 15:57:33.393 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+dbug: 30/07/2026 15:57:33.469 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (1, '0001-01-01 00:00:00', 'Business', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (2, '0001-01-01 00:00:00', 'Sport', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (3, '0001-01-01 00:00:00', 'Learning', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (4, '0001-01-01 00:00:00', 'Teaching', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (5, '0001-01-01 00:00:00', 'Daily', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (6, '0001-01-01 00:00:00', 'Travel', '0001-01-01 00:00:00');
+      SELECT changes();
+      
+      INSERT INTO "Roles" ("RoleId", "CreatedAt", "Name", "UpdatedAt")
+      VALUES (7, '0001-01-01 00:00:00', 'Work', '0001-01-01 00:00:00');
+      SELECT changes();
+dbug: 30/07/2026 15:57:33.473 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+      VALUES ('20260730135713_Seeding_Roles', '10.0.10');
+dbug: 30/07/2026 15:57:33.485 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      DELETE FROM "__EFMigrationsLock";

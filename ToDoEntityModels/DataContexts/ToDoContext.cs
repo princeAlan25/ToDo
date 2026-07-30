@@ -56,5 +56,15 @@ public class ToDoContext: DbContext
         {
             entity.HasOne(e => e.Category).WithMany(e => e.Tasks).OnDelete(DeleteBehavior.Cascade);
         });
+
+        modelBuilder.Entity<Role>().HasData(
+            new Role { RoleId = 1, Name = "Business", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 2, Name = "Sport", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 3, Name = "Learning", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 4, Name = "Teaching", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 5, Name = "Daily", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 6, Name = "Travel", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() },
+            new Role { RoleId = 7, Name = "Work", Users = [], CreatedAt = new DateTime(), UpdatedAt = new DateTime() }
+            );
     }
 }

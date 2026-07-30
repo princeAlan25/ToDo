@@ -1,0 +1,9 @@
+dbug: 30/07/2026 20:20:55.618 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "r"."RoleId", "r"."Name", "r"."CreatedAt", "r"."UpdatedAt", "u"."UserId", "u"."CreatedAt", "u"."Email", "u"."Name", "u"."Password", "u"."RoleId", "u"."UpdatedAt", (
+          SELECT COUNT(*)
+          FROM "Users" AS "u0"
+          WHERE "r"."RoleId" = "u0"."RoleId")
+      FROM "Roles" AS "r"
+      LEFT JOIN "Users" AS "u" ON "r"."RoleId" = "u"."RoleId"
+      ORDER BY "r"."RoleId"
