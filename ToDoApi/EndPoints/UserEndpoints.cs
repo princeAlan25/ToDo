@@ -25,18 +25,12 @@ public static partial class Program
             pattern: "/",
             handler: async (IUserIntermediator service, CreateUserDto user) =>
             {
-                User createdUser = new()
-                {
-                    Email = user.Email,
-                    Name = user.Name,
-                    Password = user.Password
-                };
-                return service.CreateUserAsync(createdUser);
+                return service.CreateUserAsync(user);
             }).WithName("Create User");
 
         userEndPointBuilder.MapPut(
             pattern: "/",
-            handler: (IUserIntermediator service, User user) => service.UpdateUserAsync(user))
+            handler: (IUserIntermediator service, UpdateUserDto user) => service.UpdateUserAsync(user))
             .RequireAuthorization("authenticated")
             .WithName("Update User");
 

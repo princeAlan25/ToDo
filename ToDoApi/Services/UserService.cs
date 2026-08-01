@@ -24,17 +24,17 @@ public class UserService(IUserRepository userRepo): IUserIntermediator
         return Results.NotFound($"User {userId} not found");
     }
 
-    public IResult UpdateUserAsync(User user)
+    public IResult UpdateUserAsync(UpdateUserDto user)
     {
-        UserDto result = _userRepo.CreateUserAsync(user).Result;
+        UserDto? result = _userRepo.UpdateUserAsync(user).Result;
         if (result == null) return Results.Problem($"can not update {user.UserId}");
         return Results.Accepted(value: user);
     }
 
-    public IResult CreateUserAsync(User user)
+    public IResult CreateUserAsync(CreateUserDto user)
     {
         UserDto result = _userRepo.CreateUserAsync(user).Result;
-        if (result == null) return Results.Problem($"Can not register user {user.UserId}");
+        if (result == null) return Results.Problem($"Can not register user {user.Name}");
         return Results.Created<UserDto>("/auth/signup",value: result);
     }
 

@@ -27,13 +27,7 @@ public class AuthService(IConfiguration config, IUserRepository userRepo) : IAut
     public IResult SignUp(CreateUserDto createUserRequest)
     {
         if(Validator.ValidateUserSignUp(createUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignUp(createUserRequest));
-        User request = new()
-        {
-            Email = createUserRequest.Email,
-            Password = createUserRequest.Password,
-            Name = createUserRequest.Name
-        };
-        UserDto user = userRepo.CreateUserAsync(request).Result;
+        UserDto user = userRepo.CreateUserAsync(createUserRequest).Result;
         if (user is null) return Results.BadRequest("Signup failed");
         return Results.Created("/user", user);
     }

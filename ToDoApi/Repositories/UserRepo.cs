@@ -7,23 +7,33 @@ using ToDoEntityModels.Models;
 
 namespace ToDoApi.Repositories;
 
-public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUserRepository
+public class UserRepo(ToDoContext db) : IUserRepository
 {
     private readonly ToDoContext _db = db;
-    public Task<UserDto> CreateUserAsync(User user)
+    public Task<UserDto> CreateUserAsync(CreateUserDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
-        user.Password = Securit.HashPassword(user.Password);
-        _db.Users.AddAsync(user);
+        User userRequest = new()
+        {
+            UserId = Guid.NewGuid(),
+            Email = user.Email,
+            Name = user.Name,
+            Password = Securit.HashPassword(user.Password),
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now
+        };
+
+        _db.Users.AddAsync(userRequest);
         _db.SaveChangesAsync();
+
         UserDto createdUser = new(
-            user.UserId,
-            user.Email,
-            user.Name,
-            user.Role,
-            [.. user.Categories],
-            user.CreatedAt,
-            user.UpdatedAt
+            userRequest.UserId,
+            userRequest.Email,
+            userRequest.Name,
+            userRequest.Role,
+            [.. userRequest.Categories],
+            userRequest.CreatedAt,
+            userRequest.UpdatedAt
             );
         return Task.FromResult(createdUser);
     }
@@ -64,29 +74,32 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUserRepositor
             );
     }
 
-    public async Task<UserDto> UpdateUserAsync(User user)
+    public async Task<UserDto?> UpdateUserAsync(UpdateUserDto user)
     {
-        if (user == null) throw new ArgumentNullException(nameof(user));
-        try
-        {
-            _db.Entry<User>(user).CurrentValues.SetValues(user);
-            await _db.SaveChangesAsync();
-        }
-        catch(Exception ex)
-        {
-            logger.LogError($"{nameof(user)} does not exist or operation failed");
-        }
+        ArgumentNullException.ThrowIfNull(user);
 
+        await _db.Users
+            .Where(u => u.UserId == user.UserId)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(u => u.Email, user.Email)
+                .SetProperty(u => u.Name, user.Name)
+                .SetProperty(u => u.RoleId, user.RoleId)
+                .SetProperty(u => u.UpdatedAt, user.UpdatedAt));
 
-        UserDto updatedUser = new(
-            user.UserId,
-            user.Email,
-            user.Name,
-            user.Role,
-            [.. user.Categories],
-            user.CreatedAt,
-            user.UpdatedAt
-            );
+        UserDto? updatedUser = _db.Users
+            .Include(u => u.Role)
+            .Include(u => u.Categories)
+            .Select(u => new UserDto(
+                u.UserId,
+                u.Email,
+                u.Name,
+                u.Role,
+                u.Categories.ToList<Category>(),
+                u.CreatedAt,
+                u.UpdatedAt
+            ))
+            .FirstOrDefault(u => u.UserId == user.UserId);
+
         return updatedUser;
     }
 }

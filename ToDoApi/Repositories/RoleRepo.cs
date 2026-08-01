@@ -9,15 +9,17 @@ namespace ToDoApi.Repositories;
 public class RoleRepo(ToDoContext db, ILogger<RoleRepo> logger) : IRoleRepository
 {
     private readonly ToDoContext _db = db;
-    public Task<RoleDto> CreateRoleAsync(CreateRoleDto role)
+    public async Task<RoleDto> CreateRoleAsync(CreateRoleDto role)
     {
         ArgumentNullException.ThrowIfNull(role);
         Role dbRoleMap = new()
         {
             Name = role.Name
         };
+
         _db.Roles.Add(dbRoleMap);
-        _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
+
         RoleDto roleResult = new()
         {
             RoleId = dbRoleMap.RoleId,
@@ -26,20 +28,20 @@ public class RoleRepo(ToDoContext db, ILogger<RoleRepo> logger) : IRoleRepositor
             UpdatedAt = DateTime.Now,
             ReferenceUsersCount = dbRoleMap.Users is not null ? dbRoleMap.Users.Count : 0
         };
-        return Task.FromResult(roleResult);
+        return roleResult;
     }
 
-    public Task<bool> DeleteRoleAsync(int roleId)
+    public async Task<bool> DeleteRoleAsync(int roleId)
     {
-        Role? role = _db.Roles.FirstOrDefault(r => r.RoleId == roleId);
+        Role? role = await _db.Roles.FirstOrDefaultAsync(r => r.RoleId == roleId);
         if (role == null) 
         {
             logger.LogError("Unknown Role Database record", [ role ]);
-            return Task.FromResult(false);
+            return false;
         }
         _db.Roles.Remove(role);
-        _db.SaveChangesAsync();
-        return Task.FromResult(true);
+        await _db.SaveChangesAsync();
+        return true;
     }
 
     public async Task<List<RoleDto>?> GetAllRolesAsync()
@@ -70,32 +72,30 @@ public class RoleRepo(ToDoContext db, ILogger<RoleRepo> logger) : IRoleRepositor
         return role;
     }
 
-    public Task<RoleDto?> UpdateRoleAsync(UpdateRoleDto role)
+    public async Task<RoleDto?> UpdateRoleAsync(UpdateRoleDto role)
     {
         ArgumentNullException.ThrowIfNull(role);
-        try
-        {
-            Role roleMap = new()
+
+        await _db.Roles
+            .Where(r => r.RoleId == role.RoleId)
+            .ExecuteUpdateAsync(r => r
+                .SetProperty(r => r.Name, role.Name)
+                .SetProperty(r => r.UpdatedAt, role.UpdatedAt)
+            );
+
+        RoleDto? updatedRole = await _db.Roles
+            .AsNoTracking()
+            .Where(r => r.RoleId == role.RoleId)
+            .Select(r => new RoleDto
             {
-                Name = role.Name
-            };
-            _db.Entry<Role>(roleMap).CurrentValues.SetValues(roleMap);
-            _db.SaveChangesAsync();
-        }
-        catch(Exception ex)
-        {
-            logger.LogError(ex.Message, [ex]);
-        }
-        
-        Role? updatedRole = _db.Roles.Include(r => r.Users).FirstOrDefault(r => r.Name == role.Name) ?? throw new InvalidOperationException(message: "Invalid database updated operation");
-        RoleDto updatedRoleMap = new()
-        {
-            RoleId = updatedRole.RoleId,
-            Name = updatedRole.Name,
-            CreatedAt = updatedRole.CreatedAt,
-            UpdatedAt = DateTime.Now,
-            ReferenceUsersCount = updatedRole.Users is not null ? updatedRole.Users.Count : 0
-        };
-        return Task.FromResult(updatedRoleMap ?? null);
+                RoleId = r.RoleId,
+                Name = r.Name,
+                CreatedAt = r.CreatedAt,
+                UpdatedAt = r.UpdatedAt,
+                ReferenceUsersCount = r.Users != null ? r.Users.Count : 0
+            })
+            .FirstOrDefaultAsync();
+
+        return updatedRole;
     }
 }

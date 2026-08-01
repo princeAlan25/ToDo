@@ -16,5 +16,7 @@ public record RoleDto()
 
 public record UpdateRoleDto()
 {
+    public required int RoleId { get; init; }
     public required string Name { get; init; }
+    public required DateTime UpdatedAt { get; init; } = DateTime.Now;
 }

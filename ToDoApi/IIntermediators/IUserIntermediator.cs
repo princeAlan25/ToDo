@@ -1,4 +1,5 @@
-﻿using ToDoEntityModels.Models;
+﻿using ToDoApi.DTOs;
+using ToDoEntityModels.Models;
 
 namespace ToDoApi.IIntermediators;
 
@@ -6,6 +7,6 @@ public interface IUserIntermediator
 {
     IResult GetUserByIdAsync(string userId);
     IResult DeleteUserAsync(string userId);
-    IResult UpdateUserAsync(User user);
-    IResult CreateUserAsync(User user);
+    IResult UpdateUserAsync(UpdateUserDto user);
+    IResult CreateUserAsync(CreateUserDto user);
 }

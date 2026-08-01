@@ -1,0 +1,12 @@
+dbug: 01/08/2026 21:40:39.309 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@userId='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      SELECT "s"."UserId", "s"."CreatedAt", "s"."Email", "s"."Name", "s"."Password", "s"."RoleId", "s"."UpdatedAt", "s"."RoleId0", "s"."CreatedAt0", "s"."Name0", "s"."UpdatedAt0", "c"."CategoryId", "c"."ColorCode", "c"."CreatedAt", "c"."Description", "c"."Name", "c"."UpdatedAt", "c"."UserId"
+      FROM (
+          SELECT "u"."UserId", "u"."CreatedAt", "u"."Email", "u"."Name", "u"."Password", "u"."RoleId", "u"."UpdatedAt", "r"."RoleId" AS "RoleId0", "r"."CreatedAt" AS "CreatedAt0", "r"."Name" AS "Name0", "r"."UpdatedAt" AS "UpdatedAt0"
+          FROM "Users" AS "u"
+          LEFT JOIN "Roles" AS "r" ON "u"."RoleId" = "r"."RoleId"
+          WHERE "u"."UserId" = @userId
+          LIMIT 1
+      ) AS "s"
+      LEFT JOIN "Categories" AS "c" ON "s"."UserId" = "c"."UserId"
+      ORDER BY "s"."UserId", "s"."RoleId0"
