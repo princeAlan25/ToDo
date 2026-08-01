@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ToDoEntityModels.Models;
 
@@ -7,7 +6,7 @@ public class Category
 {
     [Key]
     [Required]
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
     [Required]
     public string Name { get; set; } = "";
     [Required]

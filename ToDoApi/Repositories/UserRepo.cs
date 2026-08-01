@@ -76,6 +76,8 @@ public class UserRepo(ToDoContext db, ILogger<UserRepo> logger) : IUserRepositor
         {
             logger.LogError($"{nameof(user)} does not exist or operation failed");
         }
+
+
         UserDto updatedUser = new(
             user.UserId,
             user.Email,

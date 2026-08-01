@@ -1,0 +1,9 @@
+dbug: 01/08/2026 17:48:31.510 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime)], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Users" ("UserId", "CreatedAt", "Email", "Name", "Password", "RoleId", "UpdatedAt")
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+dbug: 01/08/2026 17:48:31.552 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p0='?' (Size = 7), @p1='?' (DbType = DateTime), @p2='?' (Size = 69), @p3='?' (Size = 11), @p4='?' (DbType = DateTime), @p5='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "Categories" ("ColorCode", "CreatedAt", "Description", "Name", "UpdatedAt", "UserId")
+      VALUES (@p0, @p1, @p2, @p3, @p4, @p5)
+      RETURNING "CategoryId";

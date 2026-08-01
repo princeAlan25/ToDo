@@ -46,11 +46,11 @@ public class RoleRepo(ToDoContext db, ILogger<RoleRepo> logger) : IRoleRepositor
     {
         List<RoleDto> roles = await _db.Roles.Include(r => r.Users)
             .Select(r => new RoleDto { 
-                RoleId = r.RoleId, 
-                Name = r.Name, 
-                CreatedAt = r.CreatedAt, 
-                UpdatedAt = r.UpdatedAt, 
-                ReferenceUsersCount = r.Users != null ? r.Users.Count : 0 
+                RoleId = r.RoleId,
+                Name = r.Name,
+                CreatedAt = r.CreatedAt,
+                UpdatedAt = r.UpdatedAt,
+                ReferenceUsersCount = r.Users != null ? r.Users.Count : 0
             }).ToListAsync();
         return roles;
     }

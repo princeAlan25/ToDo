@@ -1,0 +1,11 @@
+dbug: 01/08/2026 20:09:58.094 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@categoryId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT "c"."CategoryId", "c"."ColorCode", "c"."CreatedAt", "c"."Description", "c"."Name", "c"."UpdatedAt", "c"."UserId"
+      FROM "Categories" AS "c"
+      WHERE "c"."CategoryId" = @categoryId
+      LIMIT 1
+dbug: 01/08/2026 20:09:58.809 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      DELETE FROM "Categories"
+      WHERE "CategoryId" = @p0
+      RETURNING 1;

@@ -1,0 +1,6 @@
+dbug: 01/08/2026 20:09:12.921 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "c"."CategoryId", "c"."ColorCode", "c"."CreatedAt", "c"."Description", "c"."Name", "c"."UpdatedAt", "c"."UserId", "t"."TaskId", "t"."CategoryId", "t"."CreatedAt", "t"."Description", "t"."Name", "t"."Priority", "t"."Starred", "t"."UpdatedAt"
+      FROM "Categories" AS "c"
+      LEFT JOIN "Tasks" AS "t" ON "c"."CategoryId" = "t"."CategoryId"
+      ORDER BY "c"."CategoryId"

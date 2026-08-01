@@ -60,11 +60,13 @@ builder.Services.AddProblemDetails();
 //Repositories registration
 builder.Services.AddTransient<IUserRepository, UserRepo>();
 builder.Services.AddTransient<IRoleRepository, RoleRepo>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepo>();
 
 //intermediators/services registration
 builder.Services.AddTransient<IUserIntermediator, UserService>();
 builder.Services.AddTransient<IAuthentication, AuthService>();
 builder.Services.AddTransient<IRoleIntermediator, RoleService>();
+builder.Services.AddTransient<ICategoryIntermediator, CategoryService>();
 
 var app = builder.Build();
 
@@ -83,5 +85,6 @@ app.MapGet("/", () => "Welcome to the api");
 app.MapAuthenticationEndPoints();
 app.MapUserEndPoints();
 app.MapRoleEndPoints();
+app.MapCategoryEndpoints();
 
 app.Run();

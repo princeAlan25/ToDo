@@ -1,0 +1,6 @@
+dbug: 01/08/2026 19:58:56.830 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@email='?' (Size = 27)], CommandType='Text', CommandTimeout='30']
+      SELECT "u"."UserId", "u"."CreatedAt", "u"."Email", "u"."Name", "u"."Password", "u"."RoleId", "u"."UpdatedAt"
+      FROM "Users" AS "u"
+      WHERE "u"."Email" = @email
+      LIMIT 1

@@ -1,0 +1,19 @@
+dbug: 01/08/2026 20:11:15.892 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@p='?' (Size = 6), @p2='?' (Size = 7), @p3='?' (Size = 62), @p4='?' (DbType = DateTime), @category_CategoryId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      UPDATE "Categories" AS "c"
+      SET "Name" = @p,
+          "ColorCode" = @p2,
+          "Description" = @p3,
+          "UpdatedAt" = @p4
+      WHERE "c"."CategoryId" = @category_CategoryId
+dbug: 01/08/2026 20:11:15.987 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@category_CategoryId='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+      SELECT "c0"."CategoryId", "c0"."ColorCode", "c0"."CreatedAt", "c0"."Description", "c0"."Name", "c0"."UpdatedAt", "c0"."UserId", "t"."TaskId", "t"."CategoryId", "t"."CreatedAt", "t"."Description", "t"."Name", "t"."Priority", "t"."Starred", "t"."UpdatedAt"
+      FROM (
+          SELECT "c"."CategoryId", "c"."ColorCode", "c"."CreatedAt", "c"."Description", "c"."Name", "c"."UpdatedAt", "c"."UserId"
+          FROM "Categories" AS "c"
+          WHERE "c"."CategoryId" = @category_CategoryId
+          LIMIT 1
+      ) AS "c0"
+      LEFT JOIN "Tasks" AS "t" ON "c0"."CategoryId" = "t"."CategoryId"
+      ORDER BY "c0"."CategoryId"
