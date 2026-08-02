@@ -8,6 +8,7 @@ using ToDoEntityModels.DataContexts;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,13 +30,12 @@ builder.Services.AddAuthentication()
             ClockSkew = TimeSpan.Zero
         };
     });
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("authenticated", policy =>
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("authenticated", policy =>
     {
         policy.RequireAuthenticatedUser();
     });
-});
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -61,12 +61,14 @@ builder.Services.AddProblemDetails();
 builder.Services.AddTransient<IUserRepository, UserRepo>();
 builder.Services.AddTransient<IRoleRepository, RoleRepo>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepo>();
+builder.Services.AddTransient<ITaskRepository, TaskRepo>();
 
 //intermediators/services registration
 builder.Services.AddTransient<IUserIntermediator, UserService>();
 builder.Services.AddTransient<IAuthentication, AuthService>();
 builder.Services.AddTransient<IRoleIntermediator, RoleService>();
 builder.Services.AddTransient<ICategoryIntermediator, CategoryService>();
+builder.Services.AddTransient<ITaskIntermediator, TaskService>();
 
 var app = builder.Build();
 
@@ -86,5 +88,6 @@ app.MapAuthenticationEndPoints();
 app.MapUserEndPoints();
 app.MapRoleEndPoints();
 app.MapCategoryEndpoints();
+app.MapTaskEndpoints();
 
 app.Run();
