@@ -8,7 +8,6 @@ using ToDoEntityModels.DataContexts;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi;
-using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,5 +88,4 @@ app.MapUserEndPoints();
 app.MapRoleEndPoints();
 app.MapCategoryEndpoints();
 app.MapTaskEndpoints();
-
 app.Run();

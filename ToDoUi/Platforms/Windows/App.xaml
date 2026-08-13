@@ -1,0 +1,19 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="ToDoUi.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:ToDoUi.WinUI">
+
+	<maui:MauiWinUIApplication.Resources>
+		<DataTemplate x:Key="MauiAppTitleBarTemplate">
+			<Grid VerticalAlignment="Stretch" Padding="12,0,0,0">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<Image Source="todoapplogo.png" Width="20" Height="20" VerticalAlignment="Center"/>
+					<TextBlock x:Name="AppTitle" Text="{Binding WindowTitle}" VerticalAlignment="Center" />
+				</StackPanel>
+			</Grid>
+		</DataTemplate>
+	</maui:MauiWinUIApplication.Resources>
+
+</maui:MauiWinUIApplication>
