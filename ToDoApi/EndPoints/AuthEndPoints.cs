@@ -1,5 +1,5 @@
 ﻿
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 using ToDoApi.IIntermediators;
 using ToDoApi.IRepositories;
 
@@ -13,14 +13,14 @@ public static partial class Program
 
         authEndPointBuilder.MapPost(
         pattern: "/signup",
-        handler: (IAuthentication authService, CreateUserDto signUpReqeust) =>
+        handler: (IAuthentication authService, SignUpRequestDto signUpReqeust) =>
         {
             return authService.SignUp(signUpReqeust);
         }).WithName("SignUp");
 
         authEndPointBuilder.MapPost(
             pattern: "/login",
-            handler: (IAuthentication authService ,LoginUserDto loginReqeust) =>
+            handler: (IAuthentication authService ,LoginRequestDto loginReqeust) =>
             {
                 return authService.SignIn(loginReqeust);
             }).WithName("SignIn");

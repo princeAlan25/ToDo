@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 
 namespace ToDoApi.Utilities;
 
 public static class Validator
 {
-    public static string? ValidateUserSignUp(CreateUserDto createUserRequest)
+    public static string? ValidateUserSignUp(SignUpRequestDto createUserRequest)
     {
         if (createUserRequest == null) return "Invalid User Credentials";
         if (string.IsNullOrWhiteSpace(createUserRequest.Email) || !Regex.IsMatch(createUserRequest.Email,"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) return "Invalid Email";
@@ -14,11 +14,11 @@ public static class Validator
         return null;
     }
 
-    public static string? ValidateUserSignIn(LoginUserDto loginUserRequest)
+    public static string? ValidateUserSignIn(LoginRequestDto loginUserRequest)
     {
         if (loginUserRequest == null) return "Invalid User credentials";
-        if (string.IsNullOrWhiteSpace(loginUserRequest.email) || !Regex.IsMatch(loginUserRequest.email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) return "Invalid Email"; ;
-        if (string.IsNullOrWhiteSpace(loginUserRequest.password)) return "Invalid Password";
+        if (string.IsNullOrWhiteSpace(loginUserRequest.Email) || !Regex.IsMatch(loginUserRequest.Email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) return "Invalid Email"; ;
+        if (string.IsNullOrWhiteSpace(loginUserRequest.Password)) return "Invalid Password";
         return null;
     }
 }

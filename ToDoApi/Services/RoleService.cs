@@ -1,4 +1,4 @@
-﻿using ToDoApi.DTOs;
+﻿using ToDoShared.DTOs;
 using ToDoApi.IIntermediators;
 using ToDoApi.IRepositories;
 

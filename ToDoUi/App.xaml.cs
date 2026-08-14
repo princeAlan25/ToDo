@@ -1,7 +1,4 @@
-﻿using MauiIcons.Core;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace ToDoUi
+﻿namespace ToDoUi
 {
     public partial class App : Application
     {

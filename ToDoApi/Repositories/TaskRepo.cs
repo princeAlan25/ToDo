@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 using ToDoApi.IRepositories;
 using ToDoEntityModels.DataContexts;
 using ToDoEntityModels.Models;

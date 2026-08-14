@@ -1,6 +1,6 @@
 ﻿using ToDoEntityModels.Models;
 
-namespace ToDoApi.DTOs;
+namespace ToDoShared.DTOs;
 
 public record TaskItemDto(
     int? TaskId,

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 using ToDoApi.IRepositories;
 using ToDoApi.Utilities;
 using ToDoEntityModels.DataContexts;
@@ -10,7 +10,7 @@ namespace ToDoApi.Repositories;
 public class UserRepo(ToDoContext db) : IUserRepository
 {
     private readonly ToDoContext _db = db;
-    public Task<UserDto> CreateUserAsync(CreateUserDto user)
+    public Task<UserDto> CreateUserAsync(SignUpRequestDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
         User userRequest = new()

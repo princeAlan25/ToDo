@@ -1,4 +1,4 @@
-﻿using ToDoApi.DTOs;
+﻿using ToDoShared.DTOs;
 
 namespace ToDoApi.IIntermediators;
 

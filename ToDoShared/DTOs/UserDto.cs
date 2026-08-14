@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ToDoEntityModels.Models;
 
-namespace ToDoApi.DTOs;
-
+namespace ToDoShared.DTOs;
 
 public record UserDto(
     Guid UserId,
@@ -22,4 +21,7 @@ public record UpdateUserDto(
     DateTime UpdatedAt
     );
 
-public record CreateUserDto(string Email, string Name, string Password);
+public record SignUpRequestDto(string Email, string Name, string Password);
+
+public record LoginRequestDto(string Email, string Password);
+public record loginResponseDto(string AccessToken, string TokenType);

@@ -1,4 +1,4 @@
-﻿using ToDoApi.DTOs;
+﻿using ToDoShared.DTOs;
 using ToDoApi.IIntermediators;
 using ToDoApi.IRepositories;
 using ToDoEntityModels.Models;
@@ -31,7 +31,7 @@ public class UserService(IUserRepository userRepo): IUserIntermediator
         return Results.Accepted(value: user);
     }
 
-    public IResult CreateUserAsync(CreateUserDto user)
+    public IResult CreateUserAsync(SignUpRequestDto user)
     {
         UserDto result = _userRepo.CreateUserAsync(user).Result;
         if (result == null) return Results.Problem($"Can not register user {user.Name}");

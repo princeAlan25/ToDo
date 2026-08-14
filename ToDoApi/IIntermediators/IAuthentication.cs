@@ -1,9 +1,9 @@
-﻿using ToDoApi.DTOs;
+﻿using ToDoShared.DTOs;
 
 namespace ToDoApi.IIntermediators;
 
 public interface IAuthentication
 {
-    public IResult SignIn(LoginUserDto loginUserRequest);
-    public IResult SignUp(CreateUserDto createUserRequest);
+    public IResult SignIn(LoginRequestDto loginUserRequest);
+    public IResult SignUp(SignUpRequestDto createUserRequest);
 }

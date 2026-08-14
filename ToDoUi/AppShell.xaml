@@ -55,6 +55,13 @@
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
+	<FlyoutItem 
+		Title="Login" 
+		Route="LoginPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}">
+		<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
+	</FlyoutItem>
+
 	<Shell.FlyoutFooter>
 		<FlexLayout JustifyContent="SpaceBetween" Padding="4" BackgroundColor="GhostWhite">
 			<HorizontalStackLayout Spacing="2">

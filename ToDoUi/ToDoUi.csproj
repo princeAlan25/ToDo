@@ -74,11 +74,7 @@
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Cupertino" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ClientServices\" />
-	  <Folder Include="HttpCleint\" />
+		<PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android" Version="2.1.13" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -88,7 +84,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ToDoShared\ToDoShared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

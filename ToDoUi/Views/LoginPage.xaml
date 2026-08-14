@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="ToDoUi.Views.LoginPage">
+
+	<FlexLayout HorizontalOptions="Center" 
+				VerticalOptions="Center" 
+				Direction="Column"
+				AlignItems="Center">
+
+		<Image Source="todoapplogo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
+		<Label Text="Welcome Back to the Plan-Space..." TextColor="RoyalBlue" />
+
+		<VerticalStackLayout>
+			<FlexLayout Direction="Column" 
+					JustifyContent="SpaceEvenly" 
+					WidthRequest="500" 
+					HeightRequest="200">
+			
+			<Entry Placeholder="example@gmail.com" />
+			<Entry Placeholder="Password" IsPassword="True" />
+			<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" />
+			
+			</FlexLayout>
+		</VerticalStackLayout>
+
+	</FlexLayout>
+
+</ContentPage>

@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 using ToDoApi.IIntermediators;
 using ToDoEntityModels.Models;
 
@@ -23,7 +23,7 @@ public static partial class Program
 
         userEndPointBuilder.MapPost(
             pattern: "/",
-            handler: async (IUserIntermediator service, CreateUserDto user) =>
+            handler: async (IUserIntermediator service, SignUpRequestDto user) =>
             {
                 return service.CreateUserAsync(user);
             }).WithName("Create User");

@@ -1,4 +1,4 @@
-﻿namespace ToDoApi.DTOs;
+﻿namespace ToDoShared.DTOs;
 
 public record CreateRoleDto()
 {

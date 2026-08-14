@@ -4,7 +4,7 @@ using ToDoApi.IIntermediators;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using ToDoApi.IRepositories;
-using ToDoApi.DTOs;
+using ToDoShared.DTOs;
 using ToDoEntityModels.Models;
 using ToDoApi.Utilities;
 
@@ -12,19 +12,15 @@ namespace ToDoApi.Services;
 
 public class AuthService(IConfiguration config, IUserRepository userRepo) : IAuthentication
 {
-    public IResult SignIn(LoginUserDto loginUserRequest)
+    public IResult SignIn(LoginRequestDto loginUserRequest)
     {
         if(Validator.ValidateUserSignIn(loginUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignIn(loginUserRequest));
-        User? user = userRepo.GetUserByEmailAsync(loginUserRequest.email).Result;
-        if (user == null || !Securit.VerifyPassword(loginUserRequest.password, user.Password)) return Results.Unauthorized();
-        return Results.Ok(new
-        {
-            AccessToken = GenerateAuthToken(user.UserId, user.Name),
-            TokenType = "Bearer"
-        });
+        User? user = userRepo.GetUserByEmailAsync(loginUserRequest.Email).Result;
+        if (user == null || !Securit.VerifyPassword(loginUserRequest.Password, user.Password)) return Results.Unauthorized();
+        return Results.Ok(new loginResponseDto(GenerateAuthToken(user.UserId, user.Name), "Bearer"));
     }
 
-    public IResult SignUp(CreateUserDto createUserRequest)
+    public IResult SignUp(SignUpRequestDto createUserRequest)
     {
         if(Validator.ValidateUserSignUp(createUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignUp(createUserRequest));
         UserDto user = userRepo.CreateUserAsync(createUserRequest).Result;

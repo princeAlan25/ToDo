@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ToDoApi/ToDoApi.csproj" />
   <Project Path="ToDoEntityModels/ToDoEntityModels.csproj" />
+  <Project Path="ToDoShared/ToDoShared.csproj" Id="f318ee46-a894-4b36-adcc-306a00156ff6" />
   <Project Path="ToDoUi/ToDoUi.csproj" />
 </Solution>
