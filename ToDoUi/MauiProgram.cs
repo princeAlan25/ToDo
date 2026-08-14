@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using CommunityToolkit.Maui;
+using MauiIcons.Cupertino;
+using MauiIcons.Core;
 
 namespace ToDoUi
 {
@@ -10,7 +11,11 @@ namespace ToDoUi
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseMauiIconsCore(option =>
+                {
+                    option.SetDefaultIconSize(16);
+                })
+                .UseCupertinoMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MauiIcons.Core;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ToDoUi
 {

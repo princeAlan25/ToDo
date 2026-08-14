@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:views="clr-namespace:ToDoUi.Views"
 	Title="My Todo"
 	FlyoutBehavior="Locked"
@@ -19,30 +20,49 @@
 		</Grid>
 	</Shell.FlyoutHeader>
 
-	<FlyoutItem Title="Home" Route="MainPage">
+	<FlyoutItem 
+		Title="My Day" 
+		Route="MainPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=SunHaze, IconColor=Grey, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
-	<FlyoutItem>
-		<ShellContent
-		Title="Home"
-		ContentTemplate="{DataTemplate views:HomePage}"
-		Route="MainPage" />
+	<FlyoutItem 
+		Title="Important" 
+		Route="MainPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=DarkOrange, IconSize=18}}" >
+		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
-	<FlyoutItem>
-		<ShellContent
-		Title="Home"
-		ContentTemplate="{DataTemplate views:HomePage}"
-		Route="MainPage" />
+	<FlyoutItem 
+		Title="Planned" 
+		Route="MainPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=RectanglePaperclip, IconColor=SkyBlue, IconSize=18}}">
+		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
-	<FlyoutItem>
-		<ShellContent
-		Title="Home"
-		ContentTemplate="{DataTemplate views:HomePage}"
-		Route="MainPage" />
+	<FlyoutItem 
+		Title="Assigned to me" 
+		Route="MainPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Bookmark, IconColor=SeaGreen, IconSize=18}}">
+		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
+	<FlyoutItem 
+		Title="Tasks" 
+		Route="MainPage" 
+		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green, IconSize=18}}">
+		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+	</FlyoutItem>
+
+	<Shell.FlyoutFooter>
+		<FlexLayout JustifyContent="SpaceBetween" Padding="4" BackgroundColor="GhostWhite">
+			<HorizontalStackLayout Spacing="2">
+				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Plus, IconColor=Black}}" VerticalOptions="Center" />
+				<Label Text="New List" VerticalOptions="Center" TextColor="Black" />
+			</HorizontalStackLayout>
+			<ImageButton Grid.Column="1" Source="{FontImageSource Glyph={mi:Cupertino Icon=SquareGrid2x2, IconColor=Black, IconSize=18}}" HorizontalOptions="End" />
+		</FlexLayout>
+	</Shell.FlyoutFooter>
 
 </Shell>

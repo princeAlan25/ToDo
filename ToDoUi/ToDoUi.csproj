@@ -45,11 +45,12 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+	
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\todoappicon.svg" Foreground="Resources\AppIcon\todoappiconfg.svg" Color="#c5fcc7" />
+		<MauiIcon Include="Resources\AppIcon\todoappicon.svg" Foreground="Resources\AppIcon\todoappiconfg.svg" />
 		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\todosplashicon.svg" Color="#cfffd7" BaseSize="128,128" />
@@ -70,7 +71,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.0" />
+		<PackageReference Include="AathifMahir.Maui.MauiIcons.Cupertino" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
 	</ItemGroup>
@@ -78,7 +79,6 @@
 	<ItemGroup>
 	  <Folder Include="ClientServices\" />
 	  <Folder Include="HttpCleint\" />
-	  <Folder Include="Layouts\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -92,6 +92,5 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
-
 
 </Project>
