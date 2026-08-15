@@ -22,42 +22,42 @@
 
 	<FlyoutItem 
 		Title="My Day" 
-		Route="MainPage" 
+		Route="home" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=SunHaze, IconColor=Grey, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
 	<FlyoutItem 
 		Title="Important" 
-		Route="MainPage" 
+		Route="home" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=DarkOrange, IconSize=18}}" >
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
 	<FlyoutItem 
 		Title="Planned" 
-		Route="MainPage" 
+		Route="home" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=RectanglePaperclip, IconColor=SkyBlue, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
 	<FlyoutItem 
 		Title="Assigned to me" 
-		Route="MainPage" 
+		Route="home" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Bookmark, IconColor=SeaGreen, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
 	<FlyoutItem 
 		Title="Tasks" 
-		Route="MainPage" 
+		Route="home" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
 	</FlyoutItem>
 
 	<FlyoutItem 
 		Title="Login" 
-		Route="LoginPage" 
+		Route="login" 
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
 	</FlyoutItem>

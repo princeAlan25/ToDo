@@ -1,12 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using ToDoShared.DTOs;
+using ToDoUi.Services.Interfaces;
 
 namespace ToDoUi.ViewModels;
 
-public partial class LoginViewModel : ObservableValidator
+public partial class LoginViewModel(IAuthenticationService authService) : ObservableValidator
 {
+    private readonly IAuthenticationService _authService = authService;
+
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [EmailAddress(ErrorMessage = "Invalid Email.")]
@@ -24,12 +27,27 @@ public partial class LoginViewModel : ObservableValidator
     public bool HasEmailError => !string.IsNullOrWhiteSpace(EmailError);
     public bool HasPasswordError => !string.IsNullOrWhiteSpace(PasswordError);
 
-    partial void OnEmailChanged(string? value) => ValidateProperty(value, nameof(Email));
-    partial void OnPasswordChanged(string? value) => ValidateProperty(value, nameof(Password));
-
-    [RelayCommand]
-    private void Login()
+    partial void OnEmailChanged(string? value)
     {
-        if (HasErrors) return;
+        ValidateProperty(value, nameof(Email));
+        LoginCommand.NotifyCanExecuteChanged();
     }
+    partial void OnPasswordChanged(string? value)
+    {
+        ValidateProperty(value, nameof(Password));
+        LoginCommand.NotifyCanExecuteChanged();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanLogin))]
+    private async Task Login()
+    {
+        if(Email != null && Password != null)
+        {
+            LoginRequestDto request = new(Email, Password);
+            loginResponseDto? result = await _authService.LoginAsync(request);
+            
+        }
+    }
+
+    private bool CanLogin() => !HasErrors && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
 }
