@@ -176,6 +176,25 @@ These are tracked deliberately rather than hidden, and are the next things to ad
 - [ ] Build real task list, task detail, and category pages
 - [ ] Move JWT configuration to user secrets and set a sensible token lifetime
 - [ ] Add a refresh token flow
+
+## Recent commits (since 2026-08-13)
+
+The following changes were committed after the README was last updated (commit 1ddf62f). They are recorded here so the repository documentation stays up to date.
+
+- 65f1588 (2026-08-14) — "Switch to MauiIcons Cupertino; update Flyout menu/icons"
+  - UI: Replaced icon set with MauiIcons Cupertino and updated the Shell flyout items to use the new icons. No functional API changes.
+
+- 6477493 (2026-08-14) — "Refactor DTOs to shared project; add auth features to UI"
+  - Shared code: Moved DTO classes to a shared project so both API and MAUI client can reuse the models.
+  - Client: Added initial authentication-related UI elements and plumbing in the MAUI project (signup/login pages and wiring for auth flows).
+
+- e6ddbb1 (2026-08-14) — "Merge branch 'master' of https://github.com/princeAlan25/ToDo into frontend"
+  - Merge: Integrated incoming changes from master into the frontend branch. See the other entries here for concrete feature additions.
+
+- 3f339c0 (2026-08-15) — "Implement MVVM for LoginPage with validation"
+  - Client: Converted the LoginPage to follow MVVM patterns, added a LoginViewModel with validation logic and basic commands. This improves testability and separates UI from auth logic.
+
+If you'd like these entries promoted to a formal CHANGELOG file or expanded with links to PRs and issue numbers, tell me which format you prefer and I will add it.
 - [ ] Await the async calls in `AuthService`
 - [ ] Gitignore `Loggs/` and `*.db`, and purge the committed logs
 - [ ] Resolve the `ToDo.Interfaces` project
