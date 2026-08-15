@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             x:Class="ToDoUi.Views.LoginPage">
+			 xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
+             x:Class="ToDoUi.Views.LoginPage"
+			 x:DataType="viewModels:LoginViewModel">
 
 	<FlexLayout HorizontalOptions="Center" 
 				VerticalOptions="Center" 
@@ -17,11 +19,12 @@
 					JustifyContent="SpaceEvenly" 
 					WidthRequest="500" 
 					HeightRequest="200">
-			
-			<Entry Placeholder="example@gmail.com" />
-			<Entry Placeholder="Password" IsPassword="True" />
-			<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" />
-			
+
+				<Entry Placeholder="example@gmail.com" Text="{Binding Email}" />
+				<Label Text="{Binding EmailError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasEmailError, Mode=OneWay}" FontSize="12" />
+				<Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+				<Label Text="{Binding PasswordError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasPasswordError, Mode=OneWay}" FontSize="12" />
+				<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" />
 			</FlexLayout>
 		</VerticalStackLayout>
 

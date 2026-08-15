@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MauiIcons.Cupertino;
 using MauiIcons.Core;
+using ToDoUi.ViewModels;
+using ToDoUi.Views;
 
 namespace ToDoUi
 {
@@ -21,6 +23,11 @@ namespace ToDoUi
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            //registering viewmodels
+            builder.Services.AddTransient<LoginViewModel>();
+            //registering views
+            builder.Services.AddTransient<LoginPage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
