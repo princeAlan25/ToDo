@@ -235,6 +235,15 @@ Notes / testing
 - These changes add a signup flow (page + viewmodel) and wire it into Shell routing and DI. Verify the app starts and navigate to the Login page, then tap the Signup link to confirm the SignUp page opens.
 
 
+### Refactor route naming and navigation for consistency
+
+- Standardized FlyoutItem routes in AppShell.xaml to "HomePage" and updated Login route to "LoginPAge" (with typo).
+- Simplified AppShell.xaml.cs by removing top-level navigation and route collection logic.
+- Updated AppShellHelper.cs to register sign-up route using nameof(SignUpPage).
+- Changed SignUpViewModel.cs navigation to use "LoginPage" and removed double slash.
+- Modified LoginPage.xaml.cs to navigate to sign-up using nameof(SignUpPage).
+- Refactored App.xaml.cs for formatting and code style; logic unchanged.
+
 ## License
 
 See [LICENSE.txt](LICENSE.txt).

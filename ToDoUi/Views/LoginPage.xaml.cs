@@ -11,6 +11,6 @@ public partial class LoginPage : ContentPage
     }
     private async void GoToSignUp(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("signup", true);
+        await Shell.Current.GoToAsync(nameof(SignUpPage), true);
     }
 }

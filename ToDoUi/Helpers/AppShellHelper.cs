@@ -6,6 +6,6 @@ public static class AppShellHelper
 {
     public static void RegisterRoutes()
     {
-        Routing.RegisterRoute("signup", typeof(SignUpPage));
+        Routing.RegisterRoute(nameof(SignUpPage), typeof(SignUpPage));
     }
 }

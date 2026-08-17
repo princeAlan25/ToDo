@@ -69,7 +69,7 @@ public partial class SignUpViewModel : ObservableValidator
             {
                 {"userEmail", response.Email }
             };
-            await Shell.Current.GoToAsync($"//Login?userEmail={response.Email}", true);
+            await Shell.Current.GoToAsync($"LoginPage?userEmail={response.Email}", true);
         }
     }
     private bool CanSignUp() => !HasErrors;
