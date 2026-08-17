@@ -6,20 +6,25 @@ using ToDoUi.Services.Interfaces;
 
 namespace ToDoUi.ViewModels;
 
-public partial class LoginViewModel(IAuthenticationService authService) : ObservableValidator
+public partial class LoginViewModel : ObservableValidator, IQueryAttributable
 {
-    private readonly IAuthenticationService _authService = authService;
+    private readonly IAuthenticationService _authService;
+    public LoginViewModel(IAuthenticationService authService)
+    {
+        _authService = authService;
+        ValidateAllProperties();
+    }
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [EmailAddress(ErrorMessage = "Invalid Email.")]
     [NotifyPropertyChangedFor(nameof(EmailError), nameof(HasEmailError))]
-    private string? email;
+    private string? _email = "";
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [MinLength(8, ErrorMessage="Password should be 8 minimum characters long.")]
     [NotifyPropertyChangedFor(nameof(PasswordError), nameof(HasPasswordError))]
-    private string? password;
+    private string? _password = "";
 
     public string? EmailError => GetErrors(nameof(Email)).FirstOrDefault()?.ErrorMessage;
     public string? PasswordError => GetErrors(nameof(Password)).FirstOrDefault()?.ErrorMessage;
@@ -44,10 +49,17 @@ public partial class LoginViewModel(IAuthenticationService authService) : Observ
         if(Email != null && Password != null)
         {
             LoginRequestDto request = new(Email, Password);
-            loginResponseDto? result = await _authService.LoginAsync(request);
-            
+            loginResponseDto? result = await _authService.LoginAsync(request);   
         }
     }
+    private bool CanLogin() => !HasErrors;
 
-    private bool CanLogin() => !HasErrors && !string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password);
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if(query.ContainsKey("userEmail"))
+        {
+            string? rawEmail = query["userEmail"].ToString();
+            if(!string.IsNullOrWhiteSpace(rawEmail)) Email = Uri.UnescapeDataString(rawEmail);
+        }
+    }
 }

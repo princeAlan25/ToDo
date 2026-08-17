@@ -12,7 +12,7 @@
 				AlignItems="Center">
 
 		<Image Source="todoapplogo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
-		<Label Text="Welcome Back to the Plan-Space..." TextColor="RoyalBlue" />
+		<Label Text="TaskSpace Login" TextColor="RoyalBlue" />
 
 		<VerticalStackLayout>
 			<FlexLayout Direction="Column" 
@@ -25,6 +25,14 @@
 				<Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
 				<Label Text="{Binding PasswordError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasPasswordError, Mode=OneWay}" FontSize="12" />
 				<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" />
+				<HorizontalStackLayout Spacing="2" HorizontalOptions="Center">
+					<Label Text="You don't have an account?" FontSize="10" VerticalOptions="Center"/>
+					<Label Text="Signup" TextDecorations="Underline" VerticalOptions="Center">
+						<Label.GestureRecognizers>
+							<TapGestureRecognizer Tapped="GoToSignUp" />
+						</Label.GestureRecognizers>
+					</Label>
+				</HorizontalStackLayout>
 			</FlexLayout>
 		</VerticalStackLayout>
 

@@ -13,12 +13,14 @@ public static class MauiProgramHelper
     public static IServiceCollection RegisterViews(this IServiceCollection services)
     {
         services.AddTransient<LoginPage>();
+        services.AddTransient<SignUpPage>();
         return services;
     }
 
     public static IServiceCollection RegisterViewModels(this IServiceCollection services)
     {
         services.AddTransient<LoginViewModel>();
+        services.AddTransient<SignUpViewModel>();
         return services;
     }
 
@@ -31,7 +33,6 @@ public static class MauiProgramHelper
             client.BaseAddress = new Uri("https://localhost:7092");
         }).AddHttpMessageHandler<AuthHandler>();
         services.AddTransient<IAuthenticationService, AuthenticationService>();
-        services.AddSingleton<AppShell>();
 
         return services;
     }

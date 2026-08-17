@@ -193,6 +193,48 @@ These are tracked deliberately rather than hidden, and are the next things to ad
   - Client: Refactor the Components by Adding AppShell Helper for registering Routes and MauiProgram Helper for registering different services clear
   - Client: Add Authentication by Connecting the client Login component to the Backend Api
 
+
+## Unstaged changes (local, not yet staged or committed)
+
+Generated automatically. These are the files currently modified or untracked in your working tree and a short description of each change — document these before you stage/commit them.
+
+- ToDoUi/App.xaml.cs
+  - Added `using ToDoUi.Views;` to allow direct references to MAUI pages from App.
+
+- ToDoUi/AppShell.xaml
+  - Adjusted FlyoutItem route values (capitalization) and ensured Login flyout entry points to the LoginPage. No functional behavior change other than route normalization.
+
+- ToDoUi/AppShell.xaml.cs
+  - Implemented root-route navigation handling: collects top-level routes, overrides OnNavigating to detect navigation to a top-level route and perform absolute navigation (Shell.Current.GoToAsync("//{route}")). Added AppShellHelper.RegisterRoutes() call and basic error handling.
+
+- ToDoUi/Helpers/AppShellHelper.cs
+  - Updated RegisterRoutes() to register the `signup` route (SignUpPage). Removed previous routing registrations for login/home so routing is centralized here.
+
+- ToDoUi/Helpers/MauiProgramHelper.cs
+  - Registered SignUpPage and SignUpViewModel in the DI container (AddTransient). Removed AppShell singleton registration. Ensures pages and viewmodels are available via constructor injection.
+
+- ToDoUi/Services/Implementations/AuthenticationService.cs
+  - Minor reordering/cleanup in LoginAsync and SignUpAsync: sets access token when login response is present and returns the response. Formatting and consistency fixes.
+
+- ToDoUi/ViewModels/LoginViewModel.cs
+  - Converted generated-parameter style to an explicit constructor that accepts IAuthenticationService and calls ValidateAllProperties(). Initialized Email and Password backing fields to empty strings, added IQueryAttributable implementation (ApplyQueryAttributes) to accept `userEmail` from navigation query, and adjusted CanLogin logic.
+
+- ToDoUi/Views/LoginPage.xaml
+  - UI update: added a small "You don't have an account? Signup" link (HorizontalStackLayout) under the Login button with a TapGestureRecognizer wired to navigate to the SignUp route.
+
+- ToDoUi/Views/LoginPage.xaml.cs
+  - Removed an unused using; added GoToSignUp event handler to navigate to the signup route using Shell.Current.GoToAsync("signup", true).
+
+- ToDoUi/Views/SignUpPage.xaml and ToDoUi/Views/SignUpPage.xaml.cs
+  - Added a new SignUpPage view with bindings to a SignUpViewModel (x:DataType). The code-behind constructor now accepts a SignUpViewModel and sets BindingContext accordingly. Page contains email/username/password entries, validation labels and a SignUp button bound to SignUpCommand.
+
+- ToDoUi/ViewModels/SignUpViewModel.cs (untracked)
+  - New view model implementing validation using ObservableValidator and CommunityToolkit attributes. Exposes Email, UserName, Password, error properties and a SignUpCommand that calls IAuthenticationService.SignUpAsync and navigates back to Login with the signed-up user's email as a query parameter.
+
+Notes / testing
+- These changes add a signup flow (page + viewmodel) and wire it into Shell routing and DI. Verify the app starts and navigate to the Login page, then tap the Signup link to confirm the SignUp page opens.
+
+
 ## License
 
 See [LICENSE.txt](LICENSE.txt).

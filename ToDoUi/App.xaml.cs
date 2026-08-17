@@ -1,4 +1,6 @@
-﻿namespace ToDoUi
+﻿using ToDoUi.Views;
+
+namespace ToDoUi
 {
     public partial class App : Application
     {

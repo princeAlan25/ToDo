@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using ToDoUi.ViewModels;
 
 namespace ToDoUi.Views;
@@ -9,6 +8,9 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-
+    }
+    private async void GoToSignUp(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("signup", true);
     }
 }
