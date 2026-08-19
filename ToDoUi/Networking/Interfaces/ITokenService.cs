@@ -6,4 +6,5 @@ public interface ITokenService
     Task SetAccessTokenAsync(string accessToken);
     Task RemoveAccessTokenAsync();
     Task<bool> HasAccessTokenAsync();
+    bool IsTokenExpired(string token);
 }

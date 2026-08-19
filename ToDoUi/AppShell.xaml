@@ -57,7 +57,7 @@
 
 	<FlyoutItem 
 		Title="Login" 
-		Route="LoginPAge"
+		Route="LoginPage"
 		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}">
 		<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
 	</FlyoutItem>

@@ -44,7 +44,7 @@ public class AuthService(IConfiguration config, IUserRepository userRepo) : IAut
                 issuer: config["Jwt:Issuer"],
                 audience: config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(3),
+                expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: cridentials
                 );
 

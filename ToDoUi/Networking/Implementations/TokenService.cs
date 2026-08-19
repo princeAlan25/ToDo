@@ -1,4 +1,5 @@
-﻿using ToDoUi.Networking.Interfaces;
+﻿using System.IdentityModel.Tokens.Jwt;
+using ToDoUi.Networking.Interfaces;
 
 namespace ToDoUi.Networking.Implementations;
 
@@ -16,6 +17,14 @@ public class TokenService : ITokenService
         return !string.IsNullOrWhiteSpace(token);
     }
 
+    public bool IsTokenExpired(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenClaim = tokenHandler.ReadJwtToken(token);
+        DateTime expirationTime = tokenClaim.ValidTo;
+        return DateTime.UtcNow >= expirationTime;
+    }
+
     public async Task RemoveAccessTokenAsync()
     {
         SecureStorage.Remove(AccessTokenKey);
@@ -26,4 +35,6 @@ public class TokenService : ITokenService
         ArgumentNullException.ThrowIfNullOrWhiteSpace(accessToken, nameof(accessToken));
         await SecureStorage.SetAsync(AccessTokenKey, accessToken);
     }
+
+
 }
