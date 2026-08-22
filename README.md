@@ -247,3 +247,54 @@ Notes / testing
 ## License
 
 See [LICENSE.txt](LICENSE.txt).
+
+## Commit 85d68705507d837448d64badf5b6ab6394df6439 — In-depth technical documentation
+
+This section documents the local commit that introduced authentication state, a dynamic UI, and related plumbing for the MAUI client. It explains the motivation, the patterns applied, a file-to-pattern mapping, testing guidance, security recommendations, and notes for reviewers and maintainers.
+
+1) Purpose and problem statement
+--------------------------------
+- Problem: The MAUI client previously had static navigation and no centralized representation of authentication state. This prevented the app from conditionally showing user-specific UI, protecting routes consistently, and reliably attaching bearer tokens to API requests.
+- Goal: Add a small, testable authentication subsystem and UI wiring so the client can: (a) perform login/signup/logout, (b) persist and attach access tokens to API calls, and (c) reflect authentication state in the Shell flyout and navigation.
+
+2) High-level solution
+----------------------
+- ShellViewModel centralizes auth state and exposes UI properties (IsAuthenticated, DisplayName).
+- AuthenticationService encapsulates login/signup/logout logic, token storage responsibilities, and publishes state changes.
+- AuthHandler is a typed HTTP message handler that attaches Authorization headers to outgoing requests.
+- ViewModels (MVVM) are used for pages so UI naturally reacts to state changes via bindings and Commands.
+- All services and view models are registered with DI in MauiProgram/MauiProgramHelper for constructor injection and testability.
+
+3) Patterns used (why & how)
+---------------------------
+- MVVM: Keeps UI thin and testable. ViewModels expose commands and observable properties; pages bind to them.
+- Dependency Injection: Decouples concrete implementations from consumers and enables easier unit testing and lifetime control.
+- Service Abstraction: IUserService, IAuthenticationService, and IApiClient separate concerns and provide mockable contracts.
+- HTTP Message Handler: AuthHandler centralizes header injection for all outgoing HTTP calls made by ApiClient.
+- Messaging / Pub-Sub: Lightweight messages (LoginSignalMessage, LogoutSignalMessage) decouple components that need to react to auth changes.
+- Shell Navigation: AppShell and AppShellHelper centralize routing and flyout composition; ShellViewModel drives the dynamic state of the flyout.
+
+4) Files implementing the patterns (mapping)
+------------------------------------------
+- ToDoUi/ViewModels/ShellViewModel.cs — central auth state and UI properties
+- ToDoUi/Services/Implementations/AuthenticationService.cs — auth operations and token handling
+- ToDoUi/Networking/Handlers/AuthHandler.cs — sets Authorization header
+- ToDoUi/Networking/Implementations/ApiClient.cs, ToDoUi/Networking/Interfaces/IApiClient.cs — HTTP wrapper and generic methods
+- ToDoUi/Views/{LoginPage,SignUpPage,TasksPage,AppShell}.xaml(.cs) — UI and bindings
+- ToDoUi/Helpers/MauiProgramHelper.cs, ToDoUi/MauiProgram.cs — DI registrations and toolkit setup
+- ToDoUi/Messengers/*SignalMessage.cs — login/logout messaging
+- ToDoEntityModels/DataContexts/ContextLogger.cs — database/context logging updates
+
+5) Concrete benefits
+--------------------
+- Single source of truth for authentication state and user information.
+- Consistent attachment of bearer tokens to API requests, preventing authorization errors caused by manual header handling.
+- Improved testability via interfaces and DI.
+- A more responsive UX: flyout menu and navigation adapt to auth state immediately after login/logout.
+
+6) Security and architecture recommendations
+------------------------------------------
+- Secrets: Move JWT signing keys and any secrets out of source control to user secrets or environment variables.
+- Token storage: Use platform SecureStorage or a platform-specific keystore for refresh and access tokens.
+- Token lifecycle: Implement refresh tokens or a silent refresh to avoid forcing users to re-authenticate frequently.
+- HttpClient usage: Register typed HttpClient with message handler to avoid socket exhaustion and to control lifetimes.
