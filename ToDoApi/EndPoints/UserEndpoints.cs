@@ -12,8 +12,9 @@ public static partial class Program
         RouteGroupBuilder userEndPointBuilder = app.MapGroup("/user").WithTags("User Management EndPoints");
         userEndPointBuilder.MapGet(
             pattern: "/",
-            handler: (IUserIntermediator service, ClaimsPrincipal user) =>
+            handler: (IUserIntermediator service, ClaimsPrincipal? user) =>
             {
+                if (user == null) return Results.Unauthorized();
                 string? userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (string.IsNullOrWhiteSpace(userId)) return Results.Unauthorized();
                 return service.GetUserByIdAsync(userId);

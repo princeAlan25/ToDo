@@ -1,11 +1,56 @@
-﻿using ToDoUi.Helpers;
+﻿using System.ComponentModel;
+using ToDoUi.Helpers;
+using ToDoUi.ViewModels;
+using ToDoUi.Views;
+
 namespace ToDoUi;
+
 public partial class AppShell : Shell
 {
-    public AppShell()
+    private readonly ShellViewModel _viewModel;
+
+    public AppShell(ShellViewModel viewModel)
     {
         InitializeComponent();
-
         AppShellHelper.RegisterRoutes();
+
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
+
+        _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+        //session validation at the startup
+        Dispatcher.Dispatch(async () =>
+        {
+            if(_viewModel != null)
+            {
+                await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+            }
+        });
+    }
+
+    private async void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is ShellViewModel viewModel)
+        {
+            await viewModel.GetAuthenticatedUserAsync();
+            AuthButtons.BindingContext = viewModel;
+            AccountStatus.BindingContext = viewModel;
+        }
+    }
+
+    protected override async void OnNavigating(ShellNavigatingEventArgs args)
+    {
+        base.OnNavigating(args);
+        string destination = args.Target?.Location.ToString() ?? "";
+        if(_viewModel != null && !_viewModel.IsAuthorized && !destination.Contains(nameof(LoginPage)))
+        {
+            args.Cancel();
+            await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+        }
+        else
+        {
+            return;
+        }
     }
 }

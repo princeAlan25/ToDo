@@ -65,7 +65,7 @@ public partial class SignUpViewModel : ObservableValidator
         UserDto? response = await _authService.SignUpAsync(user);
         if(response != null)
         {
-            Dictionary<string, object> userParams = new Dictionary<string, object>
+            Dictionary<string, object> userParams = new()
             {
                 {"userEmail", response.Email }
             };

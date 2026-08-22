@@ -5,12 +5,12 @@ using System.Net;
 
 namespace ToDoUi.Networking.Handlers;
 
-public class AuthHandler(ITokenService tokenService): DelegatingHandler
+public partial class AuthHandler(ITokenService tokenService): DelegatingHandler
 {
     private readonly ITokenService _tokenService = tokenService;
     protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        string? accessToken = _tokenService.GetAccessTokenAsync().Result;
+        string? accessToken = await _tokenService.GetAccessTokenAsync();
         if(!string.IsNullOrWhiteSpace(accessToken))
         {
             if(_tokenService.IsTokenExpired(accessToken))

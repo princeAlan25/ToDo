@@ -6,65 +6,46 @@
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
     xmlns:views="clr-namespace:ToDoUi.Views"
-	Title="My Todo"
+	xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
 	FlyoutBehavior="Locked"
 	FlyoutWidth="250">
 
 	<Shell.FlyoutHeader>
-		<Grid ColumnDefinitions="50,*" HorizontalOptions="Fill" Margin="16,0" ColumnSpacing="16" Padding="0,10">
+		<Grid x:Name="AccountStatus" x:DataType="viewModels:ShellViewModel"  ColumnDefinitions="50,*" HorizontalOptions="Fill" Margin="16,0" ColumnSpacing="16" Padding="0,10">
 			<ImageButton Source="dotnet_bot.png" WidthRequest="54" HeightRequest="54" CornerRadius="50" BorderWidth="0.5" BorderColor="GhostWhite" VerticalOptions="Center" />
 			<VerticalStackLayout Grid.Column="1" HorizontalOptions="Fill" Spacing="1" VerticalOptions="Center">
-				<Label Text="User Name" FontSize="14" FontAttributes="Bold" />
-				<Label Text="example@gmail.com" FontSize="12" TextColor="Gray" />
+				<Label Text="{Binding UserName, Mode=OneWay}" FontSize="12" FontAttributes="Bold" />
+				<Label Text="{Binding Email, Mode=OneWay}" FontSize="10" TextColor="Gray" />
 			</VerticalStackLayout>
 		</Grid>
 	</Shell.FlyoutHeader>
 
-	<FlyoutItem
-		Title="My Day"  
-		Route="HomePage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=SunHaze, IconColor=Grey, IconSize=18}}">
-		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+	<FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=SunHaze, IconColor=Grey, IconSize=18}}" Title="My Day" Route="MyDay" ContentTemplate="{DataTemplate views:TasksPage}" />
+		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=DarkOrange, IconSize=18}}" Title="Important" Route="Important" ContentTemplate="{DataTemplate views:TasksPage}" />
+		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=RectanglePaperclip, IconColor=SkyBlue, IconSize=18}}" Title="Planned" Route="Planned" ContentTemplate="{DataTemplate views:TasksPage}" />
+		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=Bookmark, IconColor=SeaGreen, IconSize=18}}" Title="Assigned to me" Route="Assignment" ContentTemplate="{DataTemplate views:TasksPage}" />
+		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green, IconSize=18}}" Title="Tasks" Route="Tasks" ContentTemplate="{DataTemplate views:TasksPage}" />
 	</FlyoutItem>
 
-	<FlyoutItem 
-		Title="Important"  
-		Route="HomePage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=DarkOrange, IconSize=18}}" >
-		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
-	</FlyoutItem>
-
-	<FlyoutItem 
-		Title="Planned"  
-		Route="HomePage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=RectanglePaperclip, IconColor=SkyBlue, IconSize=18}}">
-		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
-	</FlyoutItem>
-
-	<FlyoutItem 
-		Title="Assigned to me"
-		Route="HomePage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=Bookmark, IconColor=SeaGreen, IconSize=18}}">
-		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
-	</FlyoutItem>
-
-	<FlyoutItem 
-		Title="Tasks"  
-		Route="HomePage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green, IconSize=18}}">
-		<ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
-	</FlyoutItem>
-
-	<FlyoutItem 
-		Title="Login" 
-		Route="LoginPage"
-		FlyoutIcon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}">
-		<ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
+	<FlyoutItem FlyoutDisplayOptions="AsMultipleItems" x:Name="AuthButtons" x:DataType="viewModels:ShellViewModel">
+		<ShellContent
+			Icon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}" 
+			ContentTemplate="{DataTemplate views:LoginPage}"
+			Title="LogIn"
+			FlyoutItemIsVisible="{Binding IsAuthorized, Mode=OneWay, Converter={toolkit:InvertedBoolConverter}}"
+			Route="LoginPage" />
+		<ShellContent
+			Icon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}" 
+			ContentTemplate="{DataTemplate views:LogOutPage}"
+			Title="LogOut"
+			FlyoutItemIsVisible="{Binding IsAuthorized, Mode=OneWay}"
+			Route="LogOutPage" />
 	</FlyoutItem>
 
 	<Shell.FlyoutFooter>
-		<FlexLayout JustifyContent="SpaceBetween" Padding="4" BackgroundColor="GhostWhite">
-			<HorizontalStackLayout Spacing="2">
+		<FlexLayout JustifyContent="SpaceBetween" Padding="4">
+			<HorizontalStackLayout Spacing="2" BackgroundColor="GhostWhite" FlexLayout.Grow="1">
 				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Plus, IconColor=Black}}" VerticalOptions="Center" />
 				<Label Text="New List" VerticalOptions="Center" TextColor="Black" />
 			</HorizontalStackLayout>

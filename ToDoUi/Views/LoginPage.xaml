@@ -4,7 +4,8 @@
 			 xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
 			 xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
              x:Class="ToDoUi.Views.LoginPage"
-			 x:DataType="viewModels:LoginViewModel">
+			 x:DataType="viewModels:LoginViewModel"
+			 Title="" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
 
 	<FlexLayout HorizontalOptions="Center" 
 				VerticalOptions="Center" 

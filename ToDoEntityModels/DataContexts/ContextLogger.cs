@@ -11,5 +11,6 @@ public static class ContextLogger
 
         using StreamWriter textWriter = File.AppendText(logsFile);
         textWriter.WriteLine(message);
+        textWriter.Close();
     }
 }

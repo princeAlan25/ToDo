@@ -25,3 +25,5 @@ public record SignUpRequestDto(string Email, string Name, string Password);
 
 public record LoginRequestDto(string Email, string Password);
 public record loginResponseDto(string AccessToken, string TokenType);
+
+public record UserProfileDto(string UserName, string Email, bool IsAuthoried);

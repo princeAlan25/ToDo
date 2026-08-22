@@ -23,4 +23,10 @@ public class AuthenticationService(IApiClient apiClient, ITokenService tokenServ
         var response = await _apiClient.PostAsync<SignUpRequestDto, UserDto>("auth/signup", signUpRequest);
         return response;
     }
+
+    public async Task<bool> LogOutAsync()
+    {
+        await _tokenService.RemoveAccessTokenAsync();
+        return await _tokenService.HasAccessTokenAsync();
+    }
 }

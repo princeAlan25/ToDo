@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:ContentBasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoUi.Views.TasksPage"
+			 xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+			 xmlns:base="clr-namespace:ToDoUi.BasePages"
+			 Shell.TabBarIsVisible="False"
+			 Shell.NavBarIsVisible="False">
+
+	<Grid HorizontalOptions="Fill" ColumnDefinitions="*" RowDefinitions="80,*,100" RowSpacing="4" ColumnSpacing="2" Padding="30,0,50,0" Margin="20">
+		<FlexLayout Padding="2" JustifyContent="SpaceBetween" HeightRequest="60">
+			<VerticalStackLayout>
+				<Label x:Name="PageTitleLabel" FontSize="30"  />
+				<Label Text="Monday, 15, 2026" TextColor="Gray" />
+			</VerticalStackLayout>
+			<HorizontalStackLayout>
+				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=DotSquareFill, IconColor=Black}}" VerticalOptions="Center" />
+			</HorizontalStackLayout>
+		</FlexLayout>
+		<Border StrokeThickness="0" Grid.Row="1" MaximumHeightRequest="60">
+			<Border BackgroundColor="White" StrokeShape="{Rectangle RadiusX=4, RadiusY=4}" HorizontalOptions="Fill">
+				<FlexLayout JustifyContent="SpaceBetween" AlignItems="Center" Padding="4">
+					<HorizontalStackLayout Padding="4,2,2,0">
+						<RadioButton VerticalOptions="Center" />
+						<VerticalStackLayout VerticalOptions="Center" Spacing="2">
+							<Label FontAttributes="Bold" Text="Task Title" />
+							<Label Text="Category" FontSize="10" TextColor="Gray" />
+						</VerticalStackLayout>
+					</HorizontalStackLayout>
+					<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=Black}}" />
+				</FlexLayout>
+			</Border>
+		</Border>
+		<FlexLayout Grid.Row="2" MaximumHeightRequest="50" BackgroundColor="White" JustifyContent="SpaceBetween">
+			<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Plus, IconColor=Black}}" />
+			<Entry Placeholder="Add Task" FlexLayout.Grow="1" />
+			<HorizontalStackLayout>
+				<HorizontalStackLayout>
+					<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green}}" VerticalOptions="Center" />
+					<Label Text="Tasks" VerticalOptions="Center" />
+				</HorizontalStackLayout>
+				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Alarm, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
+				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Timer, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
+			</HorizontalStackLayout>
+		</FlexLayout>
+	</Grid>
+	
+</base:ContentBasePage>

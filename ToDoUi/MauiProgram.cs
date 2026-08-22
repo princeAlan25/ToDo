@@ -2,6 +2,8 @@
 using MauiIcons.Cupertino;
 using MauiIcons.Core;
 using ToDoUi.Helpers;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm;
 
 namespace ToDoUi
 {
@@ -12,6 +14,7 @@ namespace ToDoUi
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseMauiIconsCore(option =>
                 {
                     option.SetDefaultIconSize(16);
@@ -23,10 +26,9 @@ namespace ToDoUi
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.RegisterExtraComponents();
             builder.Services.RegisterViewModels();
             builder.Services.RegisterViews();
-
+            builder.Services.RegisterExtraComponents();
 
 #if DEBUG
     		builder.Logging.AddDebug();

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoUi.Views.SignUpPage"
 			 xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
-             Title="SignUpPage"
-			 x:DataType="viewModels:SignUpViewModel">
+             Title=""
+			 x:DataType="viewModels:SignUpViewModel" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
 
 	<FlexLayout HorizontalOptions="Center" 
 				VerticalOptions="Center" 
