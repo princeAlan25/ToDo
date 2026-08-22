@@ -6,31 +6,27 @@ using ToDoUi.Services.Interfaces;
 
 namespace ToDoUi.ViewModels;
 
-public partial class SignUpViewModel : ObservableValidator 
+public partial class SignUpViewModel(IAuthenticationService authService) : ObservableValidator
 {
-    private readonly IAuthenticationService _authService;
-
-    public SignUpViewModel(IAuthenticationService authService)
-    {
-        _authService = authService;
-        ValidateAllProperties();
-    }
+    private readonly IAuthenticationService _authService = authService;
 
     [ObservableProperty]
     [EmailAddress(ErrorMessage = "Invalid Email.")]
     [Required(ErrorMessage = "Email field is required.")]
     [NotifyPropertyChangedFor(nameof(EmailError), nameof(HasEmailError))]
-    private string _email = "";
+    public partial string Email { get; set; }
     [ObservableProperty]
     [MinLength(3, ErrorMessage = "Username should have Three characters long required.")]
     [Required(ErrorMessage = "Username field is required.")]
     [NotifyPropertyChangedFor(nameof(UserNameError), nameof(HasUserNameError))]
-    private string _userName = "";
+    public partial string UserName { get; set; }
     [ObservableProperty]
     [Required(ErrorMessage = "Password field is required.")]
     [MinLength(8, ErrorMessage = "Password should have 8 Characters long.")]
     [NotifyPropertyChangedFor(nameof(PasswordError), nameof(HasPasswordError))]
-    private string _password = "";
+    public partial string Password { get; set; }
+    [ObservableProperty]
+    public partial Dictionary<string, object>? LoginPayLoad { get; set; }
 
     public string? EmailError => GetErrors(nameof(Email)).FirstOrDefault()?.ErrorMessage;
     public string? UserNameError => GetErrors(nameof(UserName)).FirstOrDefault()?.ErrorMessage;
@@ -62,14 +58,20 @@ public partial class SignUpViewModel : ObservableValidator
     private async Task SignUp()
     {
         SignUpRequestDto user = new(Email, UserName, Password);
-        UserDto? response = await _authService.SignUpAsync(user);
-        if(response != null)
+        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
         {
-            Dictionary<string, object> userParams = new()
+            ValidateAllProperties();
+            LoginPayLoad = null;
+            return;
+        }
+        else
+        {
+            UserDto? response = await _authService.SignUpAsync(user);
+            if (response != null)
             {
-                {"userEmail", response.Email }
-            };
-            await Shell.Current.GoToAsync($"LoginPage?userEmail={response.Email}", true);
+                LoginPayLoad = new() { { "userEmail", response.Email } };
+            }
+            return;
         }
     }
     private bool CanSignUp() => !HasErrors;

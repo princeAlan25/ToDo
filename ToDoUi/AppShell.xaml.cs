@@ -16,7 +16,6 @@ public partial class AppShell : Shell
 
         _viewModel = viewModel;
         BindingContext = _viewModel;
-
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
         //session validation at the startup
@@ -24,7 +23,16 @@ public partial class AppShell : Shell
         {
             if(_viewModel != null)
             {
-                await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+                await _viewModel.GetAuthenticatedUserAsync();
+                if(!_viewModel.IsAuthorized)
+                {
+                    await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+                }
+                else
+                {
+                    AccountStatus.BindingContext = _viewModel;
+                    AuthButtons.BindingContext = _viewModel;
+                }
             }
         });
     }
@@ -43,7 +51,7 @@ public partial class AppShell : Shell
     {
         base.OnNavigating(args);
         string destination = args.Target?.Location.ToString() ?? "";
-        if(_viewModel != null && !_viewModel.IsAuthorized && !destination.Contains(nameof(LoginPage)))
+        if(_viewModel != null && !_viewModel.IsAuthorized && !destination.Contains(nameof(LoginPage)) && !destination.Contains(nameof(SignUpPage)))
         {
             args.Cancel();
             await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
