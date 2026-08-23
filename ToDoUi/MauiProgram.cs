@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using MauiIcons.Cupertino;
-using MauiIcons.Core;
+using MauiIcons.Material;
 using ToDoUi.Helpers;
 using CommunityToolkit.Maui;
-using CommunityToolkit.Mvvm;
+using MauiIcons.Core;
+using MauiIcons.Material.Outlined;
 
 namespace ToDoUi
 {
@@ -15,11 +15,13 @@ namespace ToDoUi
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
-                .UseMauiIconsCore(option =>
+                .UseMauiIconsCore(iconFactory =>
                 {
-                    option.SetDefaultIconSize(16);
+                    iconFactory.SetDefaultIconSize(16.0);
+                    iconFactory.SetDefaultIconAutoScaling(true);
                 })
-                .UseCupertinoMauiIcons()
+                .UseMaterialMauiIcons()
+                .UseMaterialOutlinedMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

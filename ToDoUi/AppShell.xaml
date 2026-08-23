@@ -5,11 +5,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+	x:Name="shell"
     xmlns:views="clr-namespace:ToDoUi.Views"
 	xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
+	xmlns:models="clr-namespace:ToDoUi.Models"
+	xmlns:converters="clr-namespace:ToDoUi.Converters"
 	FlyoutBehavior="Locked"
 	FlyoutWidth="250">
 
+	<Shell.Resources>
+		<ResourceDictionary>
+			<converters:MaterialIconConverter x:Key="MaterialIconConverter" />
+			<converters:MaterialOutlinedIconConverter x:Key="MaterialOutlinedIconConverter" />
+		</ResourceDictionary>
+	</Shell.Resources>
+
+	
+	
+	
+	
 	<Shell.FlyoutHeader>
 		<Grid x:Name="AccountStatus" x:DataType="viewModels:ShellViewModel"  ColumnDefinitions="50,*" HorizontalOptions="Fill" Margin="16,0" ColumnSpacing="16" Padding="0,10">
 			<ImageButton Source="dotnet_bot.png" WidthRequest="54" HeightRequest="54" CornerRadius="50" BorderWidth="0.5" BorderColor="GhostWhite" VerticalOptions="Center" />
@@ -20,36 +34,87 @@
 		</Grid>
 	</Shell.FlyoutHeader>
 
-	<FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=SunHaze, IconColor=Grey, IconSize=18}}" Title="My Day" Route="MyDay" ContentTemplate="{DataTemplate views:TasksPage}" />
-		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=DarkOrange, IconSize=18}}" Title="Important" Route="Important" ContentTemplate="{DataTemplate views:TasksPage}" />
-		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=RectanglePaperclip, IconColor=SkyBlue, IconSize=18}}" Title="Planned" Route="Planned" ContentTemplate="{DataTemplate views:TasksPage}" />
-		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=Bookmark, IconColor=SeaGreen, IconSize=18}}" Title="Assigned to me" Route="Assignment" ContentTemplate="{DataTemplate views:TasksPage}" />
-		<ShellContent Icon="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green, IconSize=18}}" Title="Tasks" Route="Tasks" ContentTemplate="{DataTemplate views:TasksPage}" />
-	</FlyoutItem>
+	
+	
+	
+	
+	<!--default appshell startup mainpage-->
+	<ShellContent Title="My Day"
+                  ContentTemplate="{DataTemplate views:TasksPage}"
+                  Route="MyDay" />
 
-	<FlyoutItem FlyoutDisplayOptions="AsMultipleItems" x:Name="AuthButtons" x:DataType="viewModels:ShellViewModel">
-		<ShellContent
-			Icon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}" 
-			ContentTemplate="{DataTemplate views:LoginPage}"
-			Title="LogIn"
-			FlyoutItemIsVisible="{Binding IsAuthorized, Mode=OneWay, Converter={toolkit:InvertedBoolConverter}}"
-			Route="LoginPage" />
-		<ShellContent
-			Icon="{FontImageSource Glyph={mi:Cupertino Icon=LockFill, IconColor=Black, IconSize=18}}" 
-			ContentTemplate="{DataTemplate views:LogOutPage}"
-			Title="LogOut"
-			FlyoutItemIsVisible="{Binding IsAuthorized, Mode=OneWay}"
-			Route="LogOutPage" />
-	</FlyoutItem>
+	<Shell.FlyoutContent>
+		<VerticalStackLayout>
+			<CollectionView
+				x:DataType="viewModels:ShellViewModel" 
+				ItemsSource="{Binding FlyoutItems, Mode=TwoWay}">
+				<CollectionView.ItemTemplate>
+					<DataTemplate x:DataType="models:FlyoutItemModel">
+						<Border HorizontalOptions="Start"
+								StrokeThickness="0"
+								Style="{Binding IsActive, Converter={converters:ActiveFlyoutItemConverter}}"
+								x:DataType="models:FlyoutItemModel">
 
+							<Grid ColumnDefinitions="4, Auto, *"
+								  Padding="16, 0" 
+								  ColumnSpacing="2"
+								  HorizontalOptions="Start"
+								  VerticalOptions="Center">
+
+								<BoxView Grid.Column="0"
+										 WidthRequest="4"
+										 MaximumHeightRequest="14"
+										 VerticalOptions="Fill"
+										 CornerRadius="50">
+									<BoxView.Triggers>
+										<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="True">
+											<Setter Property="Color" Value="{AppThemeBinding Light={StaticResource SecondaryDarkText}, Dark={StaticResource PrimaryDark}}" />
+										</DataTrigger>
+										<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="False">
+											<Setter Property="Color" Value="Transparent" />
+										</DataTrigger>
+									</BoxView.Triggers>
+								</BoxView>
+
+								<ImageButton Grid.Column="1" Source="{Binding ., Converter={StaticResource MaterialOutlinedIconConverter}}"
+											 Style="{StaticResource FlyoutIconButtonStyle}"/>
+
+								<Label Grid.Column="2"
+									   Text="{Binding Title}"
+									   VerticalOptions="Center"
+									   />
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
+							</Border.GestureRecognizers>
+						</Border>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+			
+			<!--separator-->
+			<Border StrokeThickness="0.5" Margin="0,4" />
+			
+			<!--Authentication part-->
+			<Button Style="{DynamicResource CustomButtonStyle}" 
+					x:DataType="viewModels:ShellViewModel" 
+					IsVisible="{Binding IsAuthorized}" 
+					Text="SignOut" ContentLayout="Left, 4" 
+					HorizontalOptions="Start"
+					ImageSource="{FontImageSource Glyph={mi:Material Icon=Logout}}"
+					Clicked="OnSignOutButtonClicked"/>
+			
+		</VerticalStackLayout>
+	</Shell.FlyoutContent>
+	
+	
+	
+	
+	
 	<Shell.FlyoutFooter>
 		<FlexLayout JustifyContent="SpaceBetween" Padding="4">
-			<HorizontalStackLayout Spacing="2" BackgroundColor="GhostWhite" FlexLayout.Grow="1">
-				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Plus, IconColor=Black}}" VerticalOptions="Center" />
-				<Label Text="New List" VerticalOptions="Center" TextColor="Black" />
-			</HorizontalStackLayout>
-			<ImageButton Grid.Column="1" Source="{FontImageSource Glyph={mi:Cupertino Icon=SquareGrid2x2, IconColor=Black, IconSize=18}}" HorizontalOptions="End" />
+			<Button Text="Add" ContentLayout="Left, 4" ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}}" />
+			<ImageButton Grid.Column="1" Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconColor=Black, IconSize=18}}" HorizontalOptions="End" />
 		</FlexLayout>
 	</Shell.FlyoutFooter>
 

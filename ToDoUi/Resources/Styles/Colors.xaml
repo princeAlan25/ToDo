@@ -24,8 +24,146 @@
     <Color x:Key="Gray400">#919191</Color>
     <Color x:Key="Gray500">#6E6E6E</Color>
     <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
+	<Color x:Key="Gray700">#363636</Color>
+	<Color x:Key="Gray800">#2B2B2B</Color>
+	<Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+	
+	<!--Custom Colors With Opacity-->
+	<Color x:Key="Transparent">#00000000</Color>
+	<Color x:Key="BlackHover">#33000000</Color>
+	<Color x:Key="WhiteHover">#33FFFFFF</Color>
+	
+	    <!-- ========================================== -->
+    <!-- GRAY 100 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray100Opaque90">#E6E1E1E1</Color>
+    <Color x:Key="Gray100Opaque80">#CCE1E1E1</Color>
+    <Color x:Key="Gray100Opaque70">#B3E1E1E1</Color>
+    <Color x:Key="Gray100Opaque60">#99E1E1E1</Color>
+    <Color x:Key="Gray100Opaque50">#80E1E1E1</Color>
+    <Color x:Key="Gray100Opaque40">#66E1E1E1</Color>
+    <Color x:Key="Gray100Opaque30">#4DE1E1E1</Color>
+    <Color x:Key="Gray100Opaque20">#33E1E1E1</Color>
+    <Color x:Key="Gray100Opaque10">#1AE1E1E1</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 200 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray200Opaque90">#E6C8C8C8</Color>
+    <Color x:Key="Gray200Opaque80">#CCC8C8C8</Color>
+    <Color x:Key="Gray200Opaque70">#B3C8C8C8</Color>
+    <Color x:Key="Gray200Opaque60">#99C8C8C8</Color>
+    <Color x:Key="Gray200Opaque50">#80C8C8C8</Color>
+    <Color x:Key="Gray200Opaque40">#66C8C8C8</Color>
+    <Color x:Key="Gray200Opaque30">#4DC8C8C8</Color>
+    <Color x:Key="Gray200Opaque20">#33C8C8C8</Color>
+    <Color x:Key="Gray200Opaque10">#1AC8C8C8</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 300 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray300Opaque90">#E6ACACAC</Color>
+    <Color x:Key="Gray300Opaque80">#CCACACAC</Color>
+    <Color x:Key="Gray300Opaque70">#B3ACACAC</Color>
+    <Color x:Key="Gray300Opaque60">#99ACACAC</Color>
+    <Color x:Key="Gray300Opaque50">#80ACACAC</Color>
+    <Color x:Key="Gray300Opaque40">#66ACACAC</Color>
+    <Color x:Key="Gray300Opaque30">#4DACACAC</Color>
+    <Color x:Key="Gray300Opaque20">#33ACACAC</Color>
+    <Color x:Key="Gray300Opaque10">#1AACACAC</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 400 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray400Opaque90">#E6919191</Color>
+    <Color x:Key="Gray400Opaque80">#CC919191</Color>
+    <Color x:Key="Gray400Opaque70">#B3919191</Color>
+    <Color x:Key="Gray400Opaque60">#99919191</Color>
+    <Color x:Key="Gray400Opaque50">#80919191</Color>
+    <Color x:Key="Gray400Opaque40">#66919191</Color>
+    <Color x:Key="Gray400Opaque30">#4D919191</Color>
+    <Color x:Key="Gray400Opaque20">#33919191</Color>
+    <Color x:Key="Gray400Opaque10">#1A919191</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 500 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray500Opaque90">#E66E6E6E</Color>
+    <Color x:Key="Gray500Opaque80">#CC6E6E6E</Color>
+    <Color x:Key="Gray500Opaque70">#B36E6E6E</Color>
+    <Color x:Key="Gray500Opaque60">#996E6E6E</Color>
+    <Color x:Key="Gray500Opaque50">#806E6E6E</Color>
+    <Color x:Key="Gray500Opaque40">#666E6E6E</Color>
+    <Color x:Key="Gray500Opaque30">#4D6E6E6E</Color>
+    <Color x:Key="Gray500Opaque20">#336E6E6E</Color>
+    <Color x:Key="Gray500Opaque10">#1A6E6E6E</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 600 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray600Opaque90">#E6404040</Color>
+    <Color x:Key="Gray600Opaque80">#CC404040</Color>
+    <Color x:Key="Gray600Opaque70">#B3404040</Color>
+    <Color x:Key="Gray600Opaque60">#99404040</Color>
+    <Color x:Key="Gray600Opaque50">#80404040</Color>
+    <Color x:Key="Gray600Opaque40">#66404040</Color>
+    <Color x:Key="Gray600Opaque30">#4D404040</Color>
+    <Color x:Key="Gray600Opaque20">#33404040</Color>
+    <Color x:Key="Gray600Opaque10">#1A404040</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 700 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray700Opaque90">#E6363636</Color>
+    <Color x:Key="Gray700Opaque80">#CC363636</Color>
+    <Color x:Key="Gray700Opaque70">#B3363636</Color>
+    <Color x:Key="Gray700Opaque60">#99363636</Color>
+    <Color x:Key="Gray700Opaque50">#80363636</Color>
+    <Color x:Key="Gray700Opaque40">#66363636</Color>
+    <Color x:Key="Gray700Opaque30">#4D363636</Color>
+    <Color x:Key="Gray700Opaque20">#33363636</Color>
+    <Color x:Key="Gray700Opaque10">#1A363636</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 800 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray800Opaque90">#E62B2B2B</Color>
+    <Color x:Key="Gray800Opaque80">#CC2B2B2B</Color>
+    <Color x:Key="Gray800Opaque70">#B32B2B2B</Color>
+    <Color x:Key="Gray800Opaque60">#992B2B2B</Color>
+    <Color x:Key="Gray800Opaque50">#802B2B2B</Color>
+    <Color x:Key="Gray800Opaque40">#662B2B2B</Color>
+    <Color x:Key="Gray800Opaque30">#4D2B2B2B</Color>
+    <Color x:Key="Gray800Opaque20">#332B2B2B</Color>
+    <Color x:Key="Gray800Opaque10">#1A2B2B2B</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 900 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray900Opaque90">#E6212121</Color>
+    <Color x:Key="Gray900Opaque80">#CC212121</Color>
+    <Color x:Key="Gray900Opaque70">#B3212121</Color>
+    <Color x:Key="Gray900Opaque60">#99212121</Color>
+    <Color x:Key="Gray900Opaque50">#80212121</Color>
+    <Color x:Key="Gray900Opaque40">#66212121</Color>
+    <Color x:Key="Gray900Opaque30">#4D212121</Color>
+    <Color x:Key="Gray900Opaque20">#33212121</Color>
+    <Color x:Key="Gray900Opaque10">#1A212121</Color>
+
+    <!-- ========================================== -->
+    <!-- GRAY 950 -->
+    <!-- ========================================== -->
+    <Color x:Key="Gray950Opaque90">#E6141414</Color>
+    <Color x:Key="Gray950Opaque80">#CC141414</Color>
+    <Color x:Key="Gray950Opaque70">#B3141414</Color>
+    <Color x:Key="Gray950Opaque60">#99141414</Color>
+    <Color x:Key="Gray950Opaque50">#80141414</Color>
+    <Color x:Key="Gray950Opaque40">#66141414</Color>
+    <Color x:Key="Gray950Opaque30">#4D141414</Color>
+    <Color x:Key="Gray950Opaque20">#33141414</Color>
+    <Color x:Key="Gray950Opaque10">#1A141414</Color>
+
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>

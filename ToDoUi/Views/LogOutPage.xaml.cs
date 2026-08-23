@@ -1,3 +1,4 @@
+using ToDoUi.Helpers;
 using ToDoUi.ViewModels;
 
 namespace ToDoUi.Views;
@@ -16,7 +17,7 @@ public partial class LogOutPage : ContentPage
 		Dispatcher.Dispatch(async () =>
 		{
             await _logoutViewModel.RemoveLocalUserAsync();
-            await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+            await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
         });
 	}
 }

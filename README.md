@@ -165,19 +165,17 @@ These are tracked deliberately rather than hidden, and are the next things to ad
 3. **`AuthService` blocks on async calls** using `.Result` in `SignIn` and `SignUp`. These should be awaited to avoid thread-pool starvation and deadlock risk.
 4. **54 log files are committed** under `ToDoApi/Loggs/`. The `.gitignore` does not cover them or the generated `.db` file.
 5. **`ToDo.Interfaces` is orphaned.** It is not listed in `ToDo.slnx` and no project references it; its interfaces are duplicated inside `ToDoApi`. It should be adopted as the shared contracts project or removed.
-6. **The database path uses relative traversal** (`../../../../Database/ToDo.db`) in both `ToDoContext` and `ToDoContextExtension`. This breaks outside the development directory layout and should come from configuration.
-7. **Seeded roles carry `new DateTime()`**, which stores `0001-01-01` rather than a real timestamp.
-8. **The seeded role names** (Business, Sport, Learning, Teaching, Daily, Travel, Work) read as task categories rather than security roles, so `Role` and `Category` may be modelling the same concept twice.
-9. `Utilities/Securit.cs` is missing a "y".
+6. **The database path uses relative traversal** (`../../../../Database/ToDo.db`) in both `ToDoContext` and
 
-## Roadmap
-
-- [ ] Wire the MAUI client to the API with a typed `HttpClient` and token storage
-- [ ] Build real task list, task detail, and category pages
-- [ ] Move JWT configuration to user secrets and set a sensible token lifetime
-- [ ] Add a refresh token flow
-
-## since 2026-08-13)
+- File: ToDoUi/AppShell.xaml.cs
+  - Problem: A StackOverflowException occurred during navigation when the app attempted to navigate to LoginPage while already navigating there. The root cause was a logical condition that evaluated true even when the destination was LoginPage, causing recursive navigation.
+  - Fix applied: Replaced the logical OR (||) with logical AND (&&) in OnNavigating so the code only navigates to LoginPage when the destination is neither LoginPage nor SignUpPage:
+    if (!destination.Contains(nameof(LoginPage)) && !destination.Contains(nameof(SignUpPage)))
+  - Effect: Prevents re-entrant navigation to LoginPage and resolves the StackOverflowException observed during debugging.
+  - Suggested follow-ups (optional):
+    - Implement a reentrancy guard (e.g., a private bool _isNavigating) to prevent recursive navigation more robustly.
+    - Consider using args.Cancel = true before calling GoToAsync to explicitly cancel the current navigation before starting a new one.
+    - Add a unit/integration test for navigation flows or manually verify by running the app and navigating between pages.
 
 - Switch to MauiIcons Cupertino; update Flyout menu/icons
   - UI: Replaced icon set with MauiIcons Cupertino and updated the Shell flyout items to use the new icons. No functional API changes.
@@ -291,10 +289,3 @@ This section documents the local commit that introduced authentication state, a 
 - Consistent attachment of bearer tokens to API requests, preventing authorization errors caused by manual header handling.
 - Improved testability via interfaces and DI.
 - A more responsive UX: flyout menu and navigation adapt to auth state immediately after login/logout.
-
-6) Security and architecture recommendations
-------------------------------------------
-- Secrets: Move JWT signing keys and any secrets out of source control to user secrets or environment variables.
-- Token storage: Use platform SecureStorage or a platform-specific keystore for refresh and access tokens.
-- Token lifecycle: Implement refresh tokens or a silent refresh to avoid forcing users to re-authenticate frequently.
-- HttpClient usage: Register typed HttpClient with message handler to avoid socket exhaustion and to control lifetimes.

@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using ToDoShared.DTOs;
 using ToDoUi.Messengers;
+using ToDoUi.Models;
 using ToDoUi.Services.Interfaces;
 
 namespace ToDoUi.ViewModels;
@@ -23,7 +26,37 @@ public partial class ShellViewModel : ObservableObject
             IsAuthorized = message.Value;
         });
     }
-
+    public ObservableCollection<FlyoutItemModel> FlyoutItems { get; set; } = [
+        new FlyoutItemModel(){
+            Icon = "WbSunny",
+            IconColor = Colors.RoyalBlue,
+            Title = "My Day",
+            Route = "Myday"
+        },
+        new FlyoutItemModel(){
+            Icon = "Star",
+            IconColor = Colors.Pink,
+            Title = "Important",
+            Route = "Important"
+        },
+        new FlyoutItemModel(){
+            Icon = "ViewWeek",
+            IconColor = Colors.Green,
+            Title = "Planned",
+            Route = "Planned"
+        },
+        new FlyoutItemModel(){
+            Icon = "AssignmentInd",
+            IconColor= Colors.DarkOliveGreen,
+            Title = "Assigned to me",
+            Route = "Assigned"
+        },
+        new FlyoutItemModel(){
+            Icon = "EventNote",
+            IconColor = Colors.DarkBlue,
+            Title = "Tasks",
+            Route = "Tasks"
+        }];
     [ObservableProperty]
     public partial string UserName { get; set; } = "Username";
     [ObservableProperty]
@@ -45,5 +78,21 @@ public partial class ShellViewModel : ObservableObject
         Email = "example@gmail.com";
         IsAuthorized = false;
         return false;
+    }
+
+    [RelayCommand]
+    public void SetFlyoutItemState(FlyoutItemModel flyoutItem)
+    {
+        foreach(FlyoutItemModel currentItem in FlyoutItems)
+        {
+            if(currentItem.Title == flyoutItem.Title)
+            {
+                currentItem.IsActive = true;
+            }
+            else
+            {
+                currentItem.IsActive = false;
+            }
+        }
     }
 }

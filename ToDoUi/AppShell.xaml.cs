@@ -26,12 +26,11 @@ public partial class AppShell : Shell
                 await _viewModel.GetAuthenticatedUserAsync();
                 if(!_viewModel.IsAuthorized)
                 {
-                    await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+                    await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
                 }
                 else
                 {
                     AccountStatus.BindingContext = _viewModel;
-                    AuthButtons.BindingContext = _viewModel;
                 }
             }
         });
@@ -42,8 +41,6 @@ public partial class AppShell : Shell
         if (sender is ShellViewModel viewModel)
         {
             await viewModel.GetAuthenticatedUserAsync();
-            AuthButtons.BindingContext = viewModel;
-            AccountStatus.BindingContext = viewModel;
         }
     }
 
@@ -51,14 +48,18 @@ public partial class AppShell : Shell
     {
         base.OnNavigating(args);
         string destination = args.Target?.Location.ToString() ?? "";
-        if(_viewModel != null && !_viewModel.IsAuthorized && !destination.Contains(nameof(LoginPage)) && !destination.Contains(nameof(SignUpPage)))
+        if (_viewModel != null && !_viewModel.IsAuthorized)
         {
-            args.Cancel();
-            await Shell.Current.GoToAsync($"///{nameof(LoginPage)}");
+            if(!destination.Contains(nameof(LoginPage)) &&
+               !destination.Contains(nameof(SignUpPage)))
+            {
+                await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
+            }
         }
-        else
-        {
-            return;
-        }
+    } 
+
+    private async void OnSignOutButtonClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(LogOutPage));
     }
 }

@@ -14,7 +14,7 @@
 				<Label Text="Monday, 15, 2026" TextColor="Gray" />
 			</VerticalStackLayout>
 			<HorizontalStackLayout>
-				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=DotSquareFill, IconColor=Black}}" VerticalOptions="Center" />
+				<ImageButton Source="{FontImageSource Glyph={mi:Material Icon=MoreHoriz, IconColor=Black}}" VerticalOptions="Center" />
 			</HorizontalStackLayout>
 		</FlexLayout>
 		<Border StrokeThickness="0" Grid.Row="1" MaximumHeightRequest="60">
@@ -27,20 +27,19 @@
 							<Label Text="Category" FontSize="10" TextColor="Gray" />
 						</VerticalStackLayout>
 					</HorizontalStackLayout>
-					<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Star, IconColor=Black}}" />
+					<ImageButton Source="{FontImageSource Glyph={mi:Material Icon=Star, IconColor=Black}}" />
 				</FlexLayout>
 			</Border>
 		</Border>
 		<FlexLayout Grid.Row="2" MaximumHeightRequest="50" BackgroundColor="White" JustifyContent="SpaceBetween">
-			<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Plus, IconColor=Black}}" />
+			<ImageButton Source="{FontImageSource Glyph={mi:Material Icon=Add, IconColor=Black}}" />
 			<Entry Placeholder="Add Task" FlexLayout.Grow="1" />
 			<HorizontalStackLayout>
 				<HorizontalStackLayout>
-					<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=ListBulletBelowRectangle, IconColor=Green}}" VerticalOptions="Center" />
-					<Label Text="Tasks" VerticalOptions="Center" />
+					<Button Text="Tasks" ContentLayout="Left, 2" ImageSource="{FontImageSource Glyph={mi:Material Icon=EventNote}}" />
 				</HorizontalStackLayout>
-				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Alarm, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
-				<ImageButton Source="{FontImageSource Glyph={mi:Cupertino Icon=Timer, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
+				<ImageButton Source="{FontImageSource Glyph={mi:Material Icon=Alarm, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
+				<ImageButton Source="{FontImageSource Glyph={mi:Material Icon=Timer, IconColor=Black, IconSize=20}}" VerticalOptions="Center" />
 			</HorizontalStackLayout>
 		</FlexLayout>
 	</Grid>

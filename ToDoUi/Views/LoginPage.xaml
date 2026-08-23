@@ -25,7 +25,7 @@
 				<Label Text="{Binding EmailError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasEmailError, Mode=OneWay}" FontSize="12" />
 				<Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
 				<Label Text="{Binding PasswordError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasPasswordError, Mode=OneWay}" FontSize="12" />
-				<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" />
+				<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" ImageSource="{FontImageSource Glyph={mi:Material Icon=Login}}" />
 				<HorizontalStackLayout Spacing="2" HorizontalOptions="Center">
 					<Label Text="You don't have an account?" FontSize="10" VerticalOptions="Center"/>
 					<Label Text="Signup" TextDecorations="Underline" VerticalOptions="Center">

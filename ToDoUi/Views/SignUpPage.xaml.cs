@@ -18,7 +18,7 @@ public partial class SignUpPage : ContentPage
     {
         if(e.PropertyName == "LoginPayLoad" && sender is SignUpViewModel signUpViewModel && signUpViewModel.LoginPayLoad != null)
 		{
-            await Shell.Current.GoToAsync($"///{nameof(LoginPage)}", true, signUpViewModel.LoginPayLoad);
+            await Shell.Current.GoToAsync($"{nameof(LoginPage)}", true, signUpViewModel.LoginPayLoad);
         }
     }
 }
