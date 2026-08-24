@@ -376,29 +376,31 @@
         </Setter>
     </Style>
   
-    <!--
-    <Style TargetType="TitleBar">
+    
+    <!--<Style TargetType="TitleBar">
         <Setter Property="MinimumHeightRequest" Value="32"/>
-        <Setter Property="VisualStateManager.VisualStateGroups">
+		<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}" />
+		<Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource OnBackgroundLight}, Dark={StaticResource OnBackgroundDark}}" />
+		<Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="TitleActiveStates">
                     <VisualState x:Name="TitleBarTitleActive">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+							<Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLightPressed}, Dark={StaticResource BackgroundDarkPressed}}" />
+                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource OnBackgroundLightPressed}, Dark={StaticResource OnBackgroundDarkPressed}}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="TitleBarTitleInactive">
                         <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundLightFocused}, Dark={StaticResource BackgroundDarkFocused}}" />
+                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource OnBackgroundLightFocused}, Dark={StaticResource OnBackgroundDarkFocused}}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
-    </Style>
-    -->
+    </Style>-->
+    
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
@@ -416,7 +418,8 @@
         <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
-    </Style>
+		<Setter Property="Shell.FlyoutBackgroundColor" Value="{AppThemeBinding Light={DynamicResource BackgroundLight}, Dark={DynamicResource BackgroundDark}}" />
+	</Style>
 
     <Style TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />

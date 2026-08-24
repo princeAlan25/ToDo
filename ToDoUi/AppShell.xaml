@@ -81,8 +81,7 @@
 
 								<Label Grid.Column="2"
 									   Text="{Binding Title}"
-									   VerticalOptions="Center"
-									   />
+									   VerticalOptions="Center" />
 							</Grid>
 							<Border.GestureRecognizers>
 								<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
@@ -94,16 +93,7 @@
 			
 			<!--separator-->
 			<Border StrokeThickness="0.5" Margin="0,4" />
-			
-			<!--Authentication part-->
-			<Button Style="{DynamicResource CustomButtonStyle}" 
-					x:DataType="viewModels:ShellViewModel" 
-					IsVisible="{Binding IsAuthorized}" 
-					Text="SignOut" ContentLayout="Left, 4" 
-					HorizontalOptions="Start"
-					ImageSource="{FontImageSource Glyph={mi:Material Icon=Logout}}"
-					Clicked="OnSignOutButtonClicked"/>
-			
+
 		</VerticalStackLayout>
 	</Shell.FlyoutContent>
 	
@@ -113,8 +103,19 @@
 	
 	<Shell.FlyoutFooter>
 		<FlexLayout JustifyContent="SpaceBetween" Padding="4">
-			<Button Text="Add" ContentLayout="Left, 4" ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}}" />
-			<ImageButton Grid.Column="1" Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconColor=Black, IconSize=18}}" HorizontalOptions="End" />
+			<Button Style="{DynamicResource AuthButtonStyle}" 
+					x:DataType="viewModels:ShellViewModel" 
+					IsVisible="{Binding IsAuthorized}" 
+					Text="SignOut" ContentLayout="Left, 4" 
+					HorizontalOptions="Start"
+					ImageSource="{FontImageSource Glyph={mi:Material Icon=Logout}, Color={AppThemeBinding Light={DynamicResource PrimaryLight}, Dark={DynamicResource PrimaryDark}}}"
+					Clicked="OnSignOutButtonClicked"/>
+			<Button Style="{DynamicResource CustomButtonStyle}"
+					Text="Add" ContentLayout="Left, 6" 
+					ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" />
+			<ImageButton Grid.Column="1" Style="{DynamicResource StandAloneIconButtonStyle}"
+						 Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconSize=24}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" 
+						 HorizontalOptions="End" />
 		</FlexLayout>
 	</Shell.FlyoutFooter>
 

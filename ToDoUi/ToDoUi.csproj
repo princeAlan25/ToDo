@@ -73,6 +73,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="..\..\..\..\Downloads\apptitleicon.png" Link="Resources\Images\apptitleicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="6.0.0" />
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material.Outlined" Version="6.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
