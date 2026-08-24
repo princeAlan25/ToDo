@@ -1,7 +1,7 @@
 # ToDo
 
 A cross-platform task manager built on .NET 10: a .NET MAUI client backed by an ASP.NET Core Minimal API over EF Core and SQLite.
-
+<img width="960" height="540" alt="Screenshot 2026-08-24 211808" src="https://github.com/user-attachments/assets/609f2f31-720e-45b7-bcdd-fddea3db0f11" />
 > **Status: in active development.** The backend API is functional and covers authentication, users, roles, categories and tasks. The MAUI client is still scaffolding: it builds and navigates, but is not yet wired to the API. See [Current status](#current-status) for the honest breakdown.
 
 ## Solution layout
