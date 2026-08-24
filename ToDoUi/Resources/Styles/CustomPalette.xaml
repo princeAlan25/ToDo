@@ -216,6 +216,8 @@
 	<Color x:Key="BackgroundDark">#1A1B21</Color>
 	<Color x:Key="OnBackgroundDark">#E3E1E9</Color>
 
+	<Color x:Key="BackgroundTransparentLight">#FFFFFF</Color>
+	<Color x:Key="BackgroundTransparentDark">#25252B</Color>
 
 	<!-- =========================
      SURFACE
@@ -234,7 +236,7 @@
 
 	<Color x:Key="SurfaceVariantLight">#E2E1EC</Color>
 	<Color x:Key="OnSurfaceVariantLight">#45464E</Color>
-
+	
 	<Color x:Key="SurfaceVariantDark">#45464E</Color>
 	<Color x:Key="OnSurfaceVariantDark">#C6C5D0</Color>
 

@@ -5,38 +5,43 @@
 			 xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
              x:Class="ToDoUi.Views.LoginPage"
 			 x:DataType="viewModels:LoginViewModel"
-			 Title="" Shell.NavBarIsVisible="False" Shell.TabBarIsVisible="False">
+			 Title="" Shell.NavBarIsVisible="False" 
+			 Shell.TabBarIsVisible="False"
+			 Padding="8,0,8,8"
+			 BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
 
-	<FlexLayout HorizontalOptions="Center" 
-				VerticalOptions="Center" 
-				Direction="Column"
-				AlignItems="Center">
+	<Border StrokeThickness="0" StrokeShape="{RoundRectangle CornerRadius=10}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundTransparentLight}, Dark={StaticResource BackgroundTransparentDark}}">
+		<FlexLayout HorizontalOptions="Center" 
+			VerticalOptions="Center" 
+			Direction="Column"
+			AlignItems="Center">
 
-		<Image Source="todoapplogo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
-		<Label Text="TaskSpace Login" TextColor="RoyalBlue" />
+			<Image Source="todoapplogo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
+			<Label Text="TaskSpace Login" TextColor="RoyalBlue" />
 
-		<VerticalStackLayout>
-			<FlexLayout Direction="Column" 
-					JustifyContent="SpaceEvenly" 
-					WidthRequest="500" 
-					HeightRequest="200">
+			<VerticalStackLayout>
+				<FlexLayout Direction="Column" 
+				JustifyContent="SpaceEvenly" 
+				WidthRequest="500" 
+				HeightRequest="200">
 
-				<Entry Placeholder="example@gmail.com" Text="{Binding Email}" />
-				<Label Text="{Binding EmailError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasEmailError, Mode=OneWay}" FontSize="12" />
-				<Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
-				<Label Text="{Binding PasswordError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasPasswordError, Mode=OneWay}" FontSize="12" />
-				<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" ImageSource="{FontImageSource Glyph={mi:Material Icon=Login}}" />
-				<HorizontalStackLayout Spacing="2" HorizontalOptions="Center">
-					<Label Text="You don't have an account?" FontSize="10" VerticalOptions="Center"/>
-					<Label Text="Signup" TextDecorations="Underline" VerticalOptions="Center">
-						<Label.GestureRecognizers>
-							<TapGestureRecognizer Tapped="GoToSignUp" />
-						</Label.GestureRecognizers>
-					</Label>
-				</HorizontalStackLayout>
-			</FlexLayout>
-		</VerticalStackLayout>
+					<Entry Placeholder="example@gmail.com" Text="{Binding Email}" />
+					<Label Text="{Binding EmailError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasEmailError, Mode=OneWay}" FontSize="12" />
+					<Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+					<Label Text="{Binding PasswordError, Mode=OneWay}" TextColor="OrangeRed" IsVisible="{Binding HasPasswordError, Mode=OneWay}" FontSize="12" />
+					<Button Text="LogIn" HorizontalOptions="Fill" TextColor="White" BackgroundColor="RoyalBlue" Command="{Binding LoginCommand}" ImageSource="{FontImageSource Glyph={mi:Material Icon=Login}}" />
+					<HorizontalStackLayout Spacing="2" HorizontalOptions="Center">
+						<Label Text="You don't have an account?" FontSize="10" VerticalOptions="Center"/>
+						<Label Text="Signup" TextDecorations="Underline" VerticalOptions="Center">
+							<Label.GestureRecognizers>
+								<TapGestureRecognizer Tapped="GoToSignUp" />
+							</Label.GestureRecognizers>
+						</Label>
+					</HorizontalStackLayout>
+				</FlexLayout>
+			</VerticalStackLayout>
 
-	</FlexLayout>
+		</FlexLayout>
+	</Border>
 
 </ContentPage>

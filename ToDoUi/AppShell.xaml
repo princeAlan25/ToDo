@@ -92,7 +92,7 @@
 			</CollectionView>
 			
 			<!--separator-->
-			<Border StrokeThickness="0.5" Margin="0,4" />
+			<Border StrokeThickness="0.2" Margin="0,4" />
 
 		</VerticalStackLayout>
 	</Shell.FlyoutContent>
@@ -114,7 +114,7 @@
 					Text="Add" ContentLayout="Left, 6" 
 					ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" />
 			<ImageButton Grid.Column="1" Style="{DynamicResource StandAloneIconButtonStyle}"
-						 Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconSize=24}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" 
+						 Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconBackgroundColor=Transparent, IconSize=24}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" 
 						 HorizontalOptions="End" />
 		</FlexLayout>
 	</Shell.FlyoutFooter>
