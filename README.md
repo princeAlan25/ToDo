@@ -1,7 +1,7 @@
 # ToDo
 
 A cross-platform task manager built on .NET 10: a .NET MAUI client backed by an ASP.NET Core Minimal API over EF Core and SQLite.
-
+<img width="960" height="540" alt="Screenshot 2026-08-24 211808" src="https://github.com/user-attachments/assets/609f2f31-720e-45b7-bcdd-fddea3db0f11" />
 > **Status: in active development.** The backend API is functional and covers authentication, users, roles, categories and tasks. The MAUI client is still scaffolding: it builds and navigates, but is not yet wired to the API. See [Current status](#current-status) for the honest breakdown.
 
 ## Solution layout
@@ -289,3 +289,12 @@ This section documents the local commit that introduced authentication state, a 
 - Consistent attachment of bearer tokens to API requests, preventing authorization errors caused by manual header handling.
 - Improved testability via interfaces and DI.
 - A more responsive UX: flyout menu and navigation adapt to auth state immediately after login/logout.
+
+## UI Modernization
+- Modernize UI with card-like Borders and new color themes
+  - Defined Beautiful Dark Theme
+  - <img width="960" height="540" alt="Screenshot 2026-08-24 211808" src="https://github.com/user-attachments/assets/609f2f31-720e-45b7-bcdd-fddea3db0f11" />
+  - Defined Beautiful Light Theme
+  - <img width="960" height="540" alt="Screenshot 2026-08-24 212811" src="https://github.com/user-attachments/assets/f9fd8516-7b80-485f-89e3-c09cbbdd7392" />
+- You can find All Incredible Themes and Palettes in a Resources folder
+
