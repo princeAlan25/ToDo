@@ -13,7 +13,7 @@ public class LogOutViewModel(IAuthenticationService _authService)
         if(!userExist)
         {
             IsAuthenticated = false;
-            WeakReferenceMessenger.Default.Send(new LogoutSignalMessage(IsAuthenticated));
+            WeakReferenceMessenger.Default.Send<LogoutSignalMessage>(new(IsAuthenticated));
         }
         else
         {

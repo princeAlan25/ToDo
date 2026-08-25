@@ -11,10 +11,10 @@ public partial class SignUpPage : ContentPage
 		_viewModel = viewModel;
 		BindingContext = _viewModel;
 
-        _viewModel.PropertyChanged += _viewModel_PropertyChanged;
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
 	}
 
-    private async void _viewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private async void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         if(e.PropertyName == "LoginPayLoad" && sender is SignUpViewModel signUpViewModel && signUpViewModel.LoginPayLoad != null)
 		{

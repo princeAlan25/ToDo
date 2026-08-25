@@ -57,7 +57,7 @@ public partial class LoginViewModel : ObservableValidator, IQueryAttributable
             if (result != null)
             {
                 IsAuthorized = true;
-                WeakReferenceMessenger.Default.Send(new LoginSignalMessage(IsAuthorized));
+                WeakReferenceMessenger.Default.Send<LoginSignalMessage>(new(IsAuthorized));
             }
             else
             {

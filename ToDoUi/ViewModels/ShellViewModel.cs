@@ -88,6 +88,7 @@ public partial class ShellViewModel : ObservableObject
             if(currentItem.Title == flyoutItem.Title)
             {
                 currentItem.IsActive = true;
+                WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(currentItem));
             }
             else
             {

@@ -1,27 +1,26 @@
 using ToDoUi.BasePages;
+using ToDoUi.ViewModels;
+using System.ComponentModel;
 
 namespace ToDoUi.Views;
 
 public partial class TasksPage : ContentBasePage
 {
-	public TasksPage()
+	private readonly TasksViewModel _tasksViewModel;
+	public TasksPage(TasksViewModel tasksViewModel)
 	{	
 		InitializeComponent();
+		_tasksViewModel = tasksViewModel;
+		BindingContext = _tasksViewModel;
+
+        _tasksViewModel.PropertyChanged += TasksViewModel_PropertyChanged;
 	}
 
-    protected override void OnAppearing()
+    private void TasksViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        base.OnAppearing();
-        try
-        {
-            if (Shell.Current?.CurrentItem?.CurrentItem?.CurrentItem is ShellContent activeShellContent)
-            {
-                PageTitleLabel.Text = activeShellContent.Title;
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex);
-        }
+        if(e.PropertyName == "CurrentFlyoutItem" && sender is TasksViewModel tasksViewModel)
+		{
+			PageTitleLabel.Text = tasksViewModel.CurrentFlyoutItem.Title;
+		}
     }
 }

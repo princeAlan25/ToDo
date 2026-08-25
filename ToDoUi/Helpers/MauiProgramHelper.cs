@@ -24,6 +24,7 @@ public static class MauiProgramHelper
         services.AddTransient<LogOutViewModel>();
         services.AddTransient<SignUpViewModel>();
         services.AddTransient<ShellViewModel>();
+        services.AddTransient<TasksViewModel>();
         return services;
     }
 
