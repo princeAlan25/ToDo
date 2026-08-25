@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MauiIcons.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections.ObjectModel;
+using ToDoShared.DTOs;
 using ToDoUi.Factories;
 
 namespace ToDoUi.Models;
@@ -15,4 +13,6 @@ public partial class FlyoutItemModel : BaseIconModel
     public partial string Route { get; set; }
     [ObservableProperty]
     public partial bool IsActive { get; set; }
+    [ObservableProperty]
+    public partial int? CategoryId { get; set; }
 }

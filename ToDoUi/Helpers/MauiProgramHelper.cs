@@ -39,6 +39,7 @@ public static class MauiProgramHelper
         }).AddHttpMessageHandler<AuthHandler>();
         services.AddTransient<IAuthenticationService, AuthenticationService>();
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<ICategoryService, CategoryService>();
 
         return services;
     }

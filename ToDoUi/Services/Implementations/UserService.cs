@@ -21,7 +21,7 @@ public class UserService(IApiClient apiClient) : IUserService
 
     public async Task<UserDto?> GetUserByIdAsync()
     {
-        UserDto? userDto = await _apiClient.GetAsync<UserDto>($"/user");
+        UserDto? userDto = await _apiClient.GetAsync<UserDto>("/user");
         return userDto;
     }
 

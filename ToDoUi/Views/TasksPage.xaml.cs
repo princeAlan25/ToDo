@@ -12,15 +12,5 @@ public partial class TasksPage : ContentBasePage
 		InitializeComponent();
 		_tasksViewModel = tasksViewModel;
 		BindingContext = _tasksViewModel;
-
-        _tasksViewModel.PropertyChanged += TasksViewModel_PropertyChanged;
 	}
-
-    private void TasksViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if(e.PropertyName == "CurrentFlyoutItem" && sender is TasksViewModel tasksViewModel)
-		{
-			PageTitleLabel.Text = tasksViewModel.CurrentFlyoutItem.Title;
-		}
-    }
 }

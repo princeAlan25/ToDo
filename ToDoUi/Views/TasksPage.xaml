@@ -4,6 +4,7 @@
              x:Class="ToDoUi.Views.TasksPage"
 			 xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
 			 xmlns:base="clr-namespace:ToDoUi.BasePages"
+			 xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
 			 Shell.TabBarIsVisible="False"
 			 Shell.NavBarIsVisible="False"
 			 Padding="8,0,8,8"
@@ -12,8 +13,8 @@
 	<Border StrokeThickness="0" StrokeShape="{RoundRectangle CornerRadius=10}" BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundTransparentLight}, Dark={StaticResource BackgroundTransparentDark}}">
 		<Grid HorizontalOptions="Fill" ColumnDefinitions="*" RowDefinitions="80,*,100" RowSpacing="4" ColumnSpacing="2" Padding="30,0,50,0" Margin="20">
 			<FlexLayout Padding="2" JustifyContent="SpaceBetween" HeightRequest="60">
-				<VerticalStackLayout>
-					<Label x:Name="PageTitleLabel" FontSize="30"  />
+				<VerticalStackLayout x:DataType="viewModels:TasksViewModel">
+					<Label x:Name="PageTitleLabel" Text="{Binding CurrentFlyoutItem.Title}" FontSize="30"  />
 					<Label Text="Monday, 15, 2026" TextColor="Gray" />
 				</VerticalStackLayout>
 				<HorizontalStackLayout>
