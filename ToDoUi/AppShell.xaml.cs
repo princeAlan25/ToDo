@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using ToDoUi.Extensions;
 using ToDoUi.Helpers;
 using ToDoUi.ViewModels;
 using ToDoUi.Views;
@@ -8,7 +9,6 @@ namespace ToDoUi;
 public partial class AppShell : Shell
 {
     private readonly ShellViewModel _viewModel;
-
     public AppShell(ShellViewModel viewModel)
     {
         InitializeComponent();
@@ -61,5 +61,35 @@ public partial class AppShell : Shell
     private async void OnSignOutButtonClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(LogOutPage));
+    }
+
+    private void MenuFlyoutItem_Clicked(object? sender, EventArgs e)
+    {
+        if(sender is MenuFlyoutItem menuFlyoutItem)
+        {
+            if(menuFlyoutItem.Text == "Rename" && menuFlyoutItem.CommandParameter is int categoryIdParam)
+            {
+                if(menuFlyoutItem.Parent.Parent is Border categoryBorder)
+                {
+                    if(categoryBorder.Content is Grid categoryGrid)
+                    {
+                        if(categoryGrid.Children.Last() is Entry categoryEntry)
+                        {
+                            Dispatcher.Dispatch(() => categoryEntry.Focus());
+                        }
+                    }
+                }
+                _viewModel.SetCategoryFocusState(categoryIdParam, true);
+            }
+        }
+    }
+
+    private void OnEntryUnfocused(object? sender, FocusEventArgs e)
+    {
+        if(sender is  Entry categoryEntry)
+        {
+            var categoryId = categoryEntry.GetValue(ElementExtensions.ChildIdentityProperty);
+            _viewModel.SetCategoryFocusState((int)categoryId, false);
+        }
     }
 }

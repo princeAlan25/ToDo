@@ -14,5 +14,7 @@ public partial class FlyoutItemModel : BaseIconModel
     [ObservableProperty]
     public partial bool IsActive { get; set; }
     [ObservableProperty]
+    public partial bool InModificationMode { get; set; }
+    [ObservableProperty]
     public partial int? CategoryId { get; set; }
 }

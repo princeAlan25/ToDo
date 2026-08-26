@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
 	xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+	xmlns:extensions="clr-namespace:ToDoUi.Extensions"
 	x:Name="shell"
     xmlns:views="clr-namespace:ToDoUi.Views"
 	xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
@@ -20,7 +21,6 @@
 		</ResourceDictionary>
 	</Shell.Resources>
 
-	
 	
 	
 	
@@ -81,7 +81,8 @@
 
 								<Label Grid.Column="2"
 									   Text="{Binding Title}"
-									   VerticalOptions="Center" />
+									   VerticalOptions="Center"/>
+
 							</Grid>
 							<Border.GestureRecognizers>
 								<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
@@ -93,8 +94,7 @@
 			
 			<!--separator-->
 			<Border StrokeThickness="0.2" Margin="0,4" />
-			
-			
+
 			<!--Categories Dynamic FlyoutItems-->
 			<CollectionView
 				x:DataType="viewModels:ShellViewModel" 
@@ -105,7 +105,13 @@
 								StrokeThickness="0"
 								Style="{Binding IsActive, Converter={converters:ActiveFlyoutItemConverter}}"
 								x:DataType="models:FlyoutItemModel">
-
+							<FlyoutBase.ContextFlyout>
+								<MenuFlyout x:DataType="models:FlyoutItemModel">
+									<MenuFlyoutItem Text="Rename" Clicked="MenuFlyoutItem_Clicked" CommandParameter="{Binding CategoryId}" />
+									<MenuFlyoutItem Text="Delete" />
+								</MenuFlyout>
+							</FlyoutBase.ContextFlyout>
+							
 							<Grid ColumnDefinitions="4, Auto, *"
 								  Padding="16, 0" 
 								  HorizontalOptions="Start"
@@ -130,9 +136,11 @@
 											 Source="{Binding ., Converter={StaticResource MaterialOutlinedIconConverter}}"
 											 Style="{StaticResource FlyoutIconButtonStyle}"/>
 
-								<Label Grid.Column="2"
+								<Entry extensions:ElementExtensions.ChildIdentity="{Binding CategoryId}" 
+									   Grid.Column="2"
 									   Text="{Binding Title}"
-									   VerticalOptions="Center" />
+									   Style="{StaticResource CategoryNormalStateStyle}"
+									   VerticalOptions="Center" IsEnabled="{Binding InModificationMode}" Unfocused="OnEntryUnfocused"/>
 							</Grid>
 							<Border.GestureRecognizers>
 								<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
@@ -141,7 +149,6 @@
 					</DataTemplate>
 				</CollectionView.ItemTemplate>
 			</CollectionView>
-
 		</VerticalStackLayout>
 	</Shell.FlyoutContent>
 	

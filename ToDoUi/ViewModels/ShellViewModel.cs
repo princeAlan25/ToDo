@@ -73,7 +73,7 @@ public partial class ShellViewModel : ObservableObject
         {
             CategoryId = 5,
             Icon = "Category",
-            IconColor = Colors.DarkGray,
+            IconColor = Colors.Black,
             Title = "New Category",
             Route = "",
         }
@@ -128,6 +128,47 @@ public partial class ShellViewModel : ObservableObject
                 }
             }
         }
+    }
+
+    public void SetCategoryFocusState(int categoryId, bool inFocusMode)
+    {
+        if(inFocusMode)
+        {
+            bool isModificationModeSet = false;
+            foreach (FlyoutItemModel item in Categories)
+            {
+                if (item.CategoryId == categoryId)
+                {
+                    item.InModificationMode = true;
+                    isModificationModeSet = true;
+                    continue;
+                }
+                else
+                {
+                    if (item.InModificationMode && isModificationModeSet)
+                    {
+                        item.InModificationMode = false;
+                        return;
+                    }
+                    else if (item.InModificationMode && !isModificationModeSet)
+                    {
+                        item.InModificationMode = false;
+                    }
+                }
+            }
+            return;
+        }
+        else
+        {
+            foreach(FlyoutItemModel item in Categories)
+            {
+                if(item.CategoryId == categoryId)
+                {
+                    item.InModificationMode = false;
+                    return;
+                }
+            }
+        }   
     }
 
     public async Task GetAllCategoriesAsync()
