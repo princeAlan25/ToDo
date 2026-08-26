@@ -105,38 +105,26 @@ public partial class ShellViewModel : ObservableObject
     [RelayCommand]
     public void SetFlyoutItemState(FlyoutItemModel flyoutItem)
     {
-        int maxLength = Math.Max(FlyoutItems.Count, Categories.Count);
-        for (int itemIdx = 0; itemIdx < maxLength; itemIdx++)
+        bool isNewActivated = false;
+        foreach (FlyoutItemModel item in FlyoutItems.Concat(Categories))
         {
-            if((itemIdx < FlyoutItems.Count))
+            if (item.CategoryId == flyoutItem.CategoryId)
             {
-                if (FlyoutItems[itemIdx].CategoryId == flyoutItem.CategoryId)
-                {
-                    if(!FlyoutItems[itemIdx].IsActive)
-                    {
-                        FlyoutItems[itemIdx].IsActive = true;
-                        WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(FlyoutItems[itemIdx]));
-                    }
-                }
-                else
-                {
-                    if(FlyoutItems[itemIdx].IsActive) FlyoutItems[itemIdx].IsActive = false;
-                }
+                if (item.IsActive) return;
+                item.IsActive = true;
+                isNewActivated = true;
+                WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(item));
             }
-            if((itemIdx < Categories.Count))
+            else
             {
-                if (Categories[itemIdx].CategoryId == flyoutItem.CategoryId)
+                if (item.IsActive && isNewActivated)
                 {
-                    Categories[itemIdx].IsActive = true;
-                    WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(Categories[itemIdx]));
+                    item.IsActive = false;
+                    return;
                 }
-                else
+                else if (item.IsActive && !isNewActivated)
                 {
-                    if(Categories[itemIdx].IsActive)
-                    {
-                        Categories[itemIdx].IsActive = false;
-                        continue;
-                    }
+                    item.IsActive = false;
                 }
             }
         }
