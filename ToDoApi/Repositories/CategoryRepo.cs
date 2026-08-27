@@ -50,7 +50,7 @@ namespace ToDoApi.Repositories
             return isDeleted;
         }
 
-        public async Task<List<CategoryDto>>? GetCategoriesAsync()
+        public async Task<List<CategoryDto>?> GetCategoriesAsync()
         {
             List<Category> categories = await _db.Categories.Include(c => c.Tasks).ToListAsync();
             return [..categories.Select(c => new CategoryDto(
@@ -64,11 +64,10 @@ namespace ToDoApi.Repositories
             ))];
         }
 
-        public Task<CategoryDto>? GetCategoryById(int categoryId)
+        public Task<CategoryDto?> GetCategoryById(int categoryId)
         {
             Category? category = _db.Categories.Include(c => c.Tasks).FirstOrDefault(c => c.CategoryId == categoryId);
-            if (category == null)
-                return null;
+            if (category == null) return null!;
 
             CategoryDto categoryResponse = new(
                 CategoryId: category.CategoryId,
@@ -79,7 +78,7 @@ namespace ToDoApi.Repositories
                 UpdatedAt: category.UpdatedAt,
                 Tasks: [..category.Tasks]
             );
-            return Task.FromResult(categoryResponse);
+            return Task.FromResult<CategoryDto?>(categoryResponse);
         }
 
         public async Task<CategoryDto> UpdateCategoryAsync(UpdateCategoryDto category)
