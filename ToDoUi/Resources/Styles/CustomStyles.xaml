@@ -111,7 +111,6 @@
 	</Style>
 
 	<Style TargetType="Entry" x:Key="CategoryNormalStateStyle">
-		<Setter Property="" />
 		<Setter Property="VisualStateManager.VisualStateGroups">
 			<VisualStateGroupList>
 				<VisualStateGroup x:Name="CommonStates">

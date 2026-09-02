@@ -1,4 +1,9 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls.Shapes;
+using System.ComponentModel;
+using ToDoUi.CustomControls;
 using ToDoUi.Extensions;
 using ToDoUi.Helpers;
 using ToDoUi.ViewModels;
@@ -91,5 +96,26 @@ public partial class AppShell : Shell
             var categoryId = categoryEntry.GetValue(ElementExtensions.ChildIdentityProperty);
             _viewModel.SetCategoryFocusState((int)categoryId, false);
         }
+    }
+
+    private async void CategoryIcon_Tapped(object sender, EventArgs e)
+    {
+        if(sender is ImageButton categoryIconButton)
+        {
+            if(categoryIconButton.Parent.Parent.Parent is Grid categoryParentGrid)
+            {
+                await ShowCategoryPopup(categoryIconButton, categoryParentGrid);
+            }
+        }
+    }
+
+    private async Task ShowCategoryPopup(View iconsContainer, View containerParent)
+    {
+        Popup iconsPopup = new IconsPopup()
+        {
+            Title = "Category Icons",
+            IconsSource = _viewModel.GetAllMaterialIcons()
+        };
+        await this.ShowPopupAsync(iconsPopup);
     }
 }

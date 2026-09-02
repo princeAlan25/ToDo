@@ -108,6 +108,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="CustomControls\IconsPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\CustomStyles.xaml">
 	    <Generator></Generator>
 	  </MauiXaml>

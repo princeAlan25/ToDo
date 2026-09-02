@@ -10,7 +10,7 @@ namespace ToDoApi.Repositories;
 public class UserRepo(ToDoContext db) : IUserRepository
 {
     private readonly ToDoContext _db = db;
-    public Task<UserDto> CreateUserAsync(SignUpRequestDto user)
+    public async Task<UserDto> CreateUserAsync(SignUpRequestDto user)
     {
         ArgumentNullException.ThrowIfNull(user);
         User userRequest = new()
@@ -23,8 +23,8 @@ public class UserRepo(ToDoContext db) : IUserRepository
             UpdatedAt = DateTime.Now
         };
 
-        _db.Users.AddAsync(userRequest);
-        _db.SaveChangesAsync();
+        await _db.Users.AddAsync(userRequest);
+        await _db.SaveChangesAsync();
 
         UserDto createdUser = new(
             userRequest.UserId,
@@ -35,7 +35,7 @@ public class UserRepo(ToDoContext db) : IUserRepository
             userRequest.CreatedAt,
             userRequest.UpdatedAt
             );
-        return Task.FromResult(createdUser);
+        return createdUser;
     }
 
     public Task<bool> DeleteUserAsync(Guid userId)

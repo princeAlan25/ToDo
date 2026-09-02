@@ -1,7 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using MauiIcons.Material;
+using MauiIcons.Material.Outlined;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using ToDoEntityModels.Models;
 using ToDoShared.DTOs;
 using ToDoUi.Messengers;
@@ -85,6 +89,8 @@ public partial class ShellViewModel : ObservableObject
     public partial string? Email { get; set; } = "example@gmail.com";
     [ObservableProperty]
     public partial bool IsAuthorized { get; set; } = false;
+    [ObservableProperty]
+    public partial bool ActivateIconsSelector { get; set; }
 
     public async Task<bool> GetAuthenticatedUserAsync()
     {
@@ -128,6 +134,11 @@ public partial class ShellViewModel : ObservableObject
                 }
             }
         }
+    }
+
+    public void ToggleIconsSelector()
+    {
+        ActivateIconsSelector = !ActivateIconsSelector;
     }
 
     public void SetCategoryFocusState(int categoryId, bool inFocusMode)
@@ -189,5 +200,12 @@ public partial class ShellViewModel : ObservableObject
                 Categories.Add(categoryItem);
             }
         }
+    }   
+
+    public ObservableCollection<string> GetAllMaterialIcons()
+    {
+        return Enum.GetValues<MaterialOutlinedIcons>()
+            .Select(icon => icon.ToString())
+            .ToObservableCollection<string>();
     }
 }
