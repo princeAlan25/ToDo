@@ -25,9 +25,10 @@ public partial class AppShell : Shell
         //session validation at the startup
         Dispatcher.Dispatch(async () =>
         {
-            if(_viewModel != null)
+            if (_viewModel != null)
             {
-                if(!_viewModel.IsAuthorized)
+                await _viewModel.GetAuthenticatedUserAsync();
+                if (!_viewModel.IsAuthorized)
                 {
                     await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
                 }
