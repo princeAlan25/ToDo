@@ -2,11 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using MauiIcons.Material;
 using MauiIcons.Material.Outlined;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using ToDoEntityModels.Models;
 using ToDoShared.DTOs;
 using ToDoUi.Messengers;
 using ToDoUi.Models;
@@ -36,35 +33,35 @@ public partial class ShellViewModel : ObservableObject
     }
     public ObservableCollection<FlyoutItemModel> FlyoutItems { get; set; } = [
         new FlyoutItemModel(){
-            CategoryId = 0,
+            CategoryId = 100,
             Icon = "WbSunny",
             IconColor = Colors.RoyalBlue,
             Title = "My Day",
             Route = "Myday"
         },
         new FlyoutItemModel(){
-            CategoryId = 1,
+            CategoryId = 200,
             Icon = "Star",
             IconColor = Colors.Pink,
             Title = "Important",
             Route = "Important"
         },
         new FlyoutItemModel(){
-            CategoryId = 2,
+            CategoryId = 300,
             Icon = "ViewWeek",
             IconColor = Colors.Green,
             Title = "Planned",
             Route = "Planned"
         },
         new FlyoutItemModel(){
-            CategoryId = 3,
+            CategoryId = 400,
             Icon = "AssignmentInd",
             IconColor= Colors.DarkOliveGreen,
             Title = "Assigned to me",
             Route = "Assigned"
         },
         new FlyoutItemModel(){
-            CategoryId = 4,
+            CategoryId = 500,
             Icon = "EventNote",
             IconColor = Colors.DarkBlue,
             Title = "Tasks",
@@ -75,11 +72,11 @@ public partial class ShellViewModel : ObservableObject
     public ObservableCollection<FlyoutItemModel> Categories { get; set; } = [
         new()
         {
-            CategoryId = 5,
+            CategoryId = 600,
             Icon = "Category",
             IconColor = Colors.Black,
             Title = "New Category",
-            Route = "",
+            Route = ""
         }
     ];
 
@@ -91,6 +88,13 @@ public partial class ShellViewModel : ObservableObject
     public partial bool IsAuthorized { get; set; } = false;
     [ObservableProperty]
     public partial bool ActivateIconsSelector { get; set; }
+
+    [ObservableProperty]
+    public partial string CategoryName { get; set; } = "Unitled";
+    [ObservableProperty]
+    public partial string CategoryDescription { get; set; } = "Category description";
+    [ObservableProperty]
+    public partial string CategoryColorCode { get; set; } = "12,23,45";
 
     public async Task<bool> GetAuthenticatedUserAsync()
     {
@@ -111,26 +115,29 @@ public partial class ShellViewModel : ObservableObject
     [RelayCommand]
     public void SetFlyoutItemState(FlyoutItemModel flyoutItem)
     {
-        bool isNewActivated = false;
-        foreach (FlyoutItemModel item in FlyoutItems.Concat(Categories))
+        if(flyoutItem != null)
         {
-            if (item.CategoryId == flyoutItem.CategoryId)
+            bool isNewActivated = false;
+            foreach (FlyoutItemModel item in FlyoutItems.Concat(Categories))
             {
-                if (item.IsActive) return;
-                item.IsActive = true;
-                isNewActivated = true;
-                WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(item));
-            }
-            else
-            {
-                if (item.IsActive && isNewActivated)
+                if (item.CategoryId == flyoutItem.CategoryId)
                 {
-                    item.IsActive = false;
-                    return;
+                    if (item.IsActive) return;
+                    item.IsActive = true;
+                    isNewActivated = true;
+                    WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(item));
                 }
-                else if (item.IsActive && !isNewActivated)
+                else
                 {
-                    item.IsActive = false;
+                    if (item.IsActive && isNewActivated)
+                    {
+                        item.IsActive = false;
+                        return;
+                    }
+                    else if (item.IsActive && !isNewActivated)
+                    {
+                        item.IsActive = false;
+                    }
                 }
             }
         }
@@ -152,6 +159,7 @@ public partial class ShellViewModel : ObservableObject
                 {
                     item.InModificationMode = true;
                     isModificationModeSet = true;
+                    WeakReferenceMessenger.Default.Send<ActiveFlyoutItemMessage>(new(item));
                     continue;
                 }
                 else
@@ -192,7 +200,7 @@ public partial class ShellViewModel : ObservableObject
                 FlyoutItemModel categoryItem = new()
                 {
                     Icon = "Category",
-                    IconColor = Color.FromRgba(_randomColorCode.Next(50,200), _randomColorCode.Next(50, 200), _randomColorCode.Next(100, 200), 1),
+                    IconColor = Color.FromRgba(_randomColorCode.Next(50,200), _randomColorCode.Next(50, 200), _randomColorCode.Next(100, 200), 255),
                     Title = category.Name,
                     Route = "",
                     CategoryId = category.CategoryId
@@ -202,10 +210,53 @@ public partial class ShellViewModel : ObservableObject
         }
     }   
 
-    public ObservableCollection<string> GetAllMaterialIcons()
+    public static ObservableCollection<string> GetAllMaterialIcons()
     {
         return Enum.GetValues<MaterialOutlinedIcons>()
             .Select(icon => icon.ToString())
             .ToObservableCollection<string>();
+    }
+
+    public async Task<bool> CreateCategoryAsync()
+    {
+        if(!string.IsNullOrWhiteSpace(CategoryName))
+        {
+            CreateCategoryDto categoryDto = new(CategoryName, CategoryColorCode, CategoryDescription);
+            var response = await _categoryService.CreateCategoryAsync(categoryDto);
+            if(response != null)
+            {
+                FlyoutItemModel categoryResult = new()
+                {
+                    Icon = "Category",
+                    IconColor = Color.FromRgba(_randomColorCode.Next(50, 200), _randomColorCode.Next(50, 200), _randomColorCode.Next(100, 200), 255),
+                    Title = response.Name,
+                    Route = "",
+                    CategoryId = response.CategoryId
+                };
+                Categories.Add(categoryResult);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public async Task UpdateCategoryAsync(FlyoutItemModel category)
+    {
+        foreach(FlyoutItemModel ct in Categories)
+        {
+            if(ct.CategoryId == category.CategoryId && ct.Title != category.Title)
+            {
+                UpdateCategoryDto request = new(category.CategoryId ?? 0, category.Title, category.IconColor.ToString(), "Category Updated");
+                var response = await _categoryService.UpdateCategoryAsync(request);
+                if (response != null)
+                {
+                    await GetAllCategoriesAsync();
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
     }
 }

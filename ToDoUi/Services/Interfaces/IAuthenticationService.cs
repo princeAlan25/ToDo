@@ -4,7 +4,7 @@ namespace ToDoUi.Services.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task<loginResponseDto?> LoginAsync(LoginRequestDto loginRequest);
+    Task<LoginResponseDto?> LoginAsync(LoginRequestDto loginRequest);
     Task<UserDto?> SignUpAsync(SignUpRequestDto signUpRequest);
 
     Task<bool> LogOutAsync();

@@ -11,6 +11,7 @@
 	xmlns:viewModels="clr-namespace:ToDoUi.ViewModels"
 	xmlns:models="clr-namespace:ToDoUi.Models"
 	xmlns:converters="clr-namespace:ToDoUi.Converters"
+	xmlns:controls="clr-namespace:ToDoUi.CustomControls"
 	FlyoutBehavior="Locked"
 	FlyoutWidth="250"
 	x:DataType="viewModels:ShellViewModel">
@@ -26,7 +27,13 @@
 	
 	
 	<Shell.FlyoutHeader>
-		<Grid x:Name="AccountStatus" x:DataType="viewModels:ShellViewModel"  ColumnDefinitions="50,*" HorizontalOptions="Fill" Margin="16,0" ColumnSpacing="16" Padding="0,10">
+		<Grid x:Name="AccountStatus" 
+			  x:DataType="viewModels:ShellViewModel" 
+			  ColumnDefinitions="50,*" 
+			  HorizontalOptions="Fill" 
+			  Margin="16,0" 
+			  ColumnSpacing="16" 
+			  Padding="0,10">
 			<ImageButton Source="dotnet_bot.png" WidthRequest="54" HeightRequest="54" CornerRadius="50" BorderWidth="0.5" BorderColor="GhostWhite" VerticalOptions="Center" />
 			<VerticalStackLayout Grid.Column="1" HorizontalOptions="Fill" Spacing="1" VerticalOptions="Center">
 				<Label Text="{Binding UserName, Mode=OneWay}" FontSize="12" FontAttributes="Bold" />
@@ -45,9 +52,11 @@
                   Route="MyDay" />
 
 	<Shell.FlyoutContent>
-		<VerticalStackLayout>
+		<Grid RowDefinitions="Auto,Auto,*">
 			<CollectionView
-				x:DataType="viewModels:ShellViewModel" 
+				VerticalScrollBarVisibility="Never"
+				HorizontalScrollBarVisibility="Never"
+				x:DataType="viewModels:ShellViewModel"
 				ItemsSource="{Binding FlyoutItems, Mode=TwoWay}">
 				<CollectionView.ItemTemplate>
 					<DataTemplate x:DataType="models:FlyoutItemModel">
@@ -57,7 +66,7 @@
 								x:DataType="models:FlyoutItemModel">
 
 							<Grid ColumnDefinitions="4, Auto, *"
-								  Padding="16, 0" 
+								  Padding="16, 0"
 								  ColumnSpacing="2"
 								  HorizontalOptions="Start"
 								  VerticalOptions="Center">
@@ -94,71 +103,73 @@
 			</CollectionView>
 			
 			<!--separator-->
-			<Border StrokeThickness="0.2" Margin="0,4" />
+			<Border Grid.Row="1" StrokeThickness="0.2" Margin="0,4" />
 
 			<!--Categories Dynamic FlyoutItems-->
-			<CollectionView
-				x:DataType="viewModels:ShellViewModel" 
-				ItemsSource="{Binding Categories, Mode=TwoWay}">
-				<CollectionView.ItemTemplate>
-					<DataTemplate x:DataType="models:FlyoutItemModel">
-						<Grid ColumnDefinitions="*" HorizontalOptions="Fill" RowDefinitions="Auto, Auto">
-							<Border HorizontalOptions="Fill"
-								StrokeThickness="0"
-								Style="{Binding IsActive, Converter={converters:ActiveFlyoutItemConverter}}"
-								x:DataType="models:FlyoutItemModel">
-								<FlyoutBase.ContextFlyout>
-									<MenuFlyout x:DataType="models:FlyoutItemModel">
-										<MenuFlyoutItem Text="Rename" Clicked="MenuFlyoutItem_Clicked" CommandParameter="{Binding CategoryId}" />
-										<MenuFlyoutItem Text="Delete" />
-									</MenuFlyout>
-								</FlyoutBase.ContextFlyout>
-
-								<Grid ColumnDefinitions="4, Auto, *"
-								  Padding="16, 0" 
-								  HorizontalOptions="Start"
-								  VerticalOptions="Center">
-
-									<BoxView Grid.Column="0"
-										 WidthRequest="4"
-										 MaximumHeightRequest="14"
-										 VerticalOptions="Fill"
-										 CornerRadius="50">
-										<BoxView.Triggers>
-											<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="True">
-												<Setter Property="Color" Value="{AppThemeBinding Light={StaticResource SecondaryDarkText}, Dark={StaticResource PrimaryDark}}" />
-											</DataTrigger>
-											<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="False">
-												<Setter Property="Color" Value="Transparent" />
-											</DataTrigger>
-										</BoxView.Triggers>
-									</BoxView>
-									<ImageButton Grid.Column="1" Source="{Binding ., Converter={StaticResource MaterialOutlinedIconConverter}}"
-											 Style="{StaticResource FlyoutIconButtonStyle}"
-												 Clicked="CategoryIcon_Tapped" />
-									<Entry extensions:ElementExtensions.ChildIdentity="{Binding CategoryId}" 
-									   Grid.Column="2"
-									   Text="{Binding Title}"
-									   Style="{StaticResource CategoryNormalStateStyle}"
-									   VerticalOptions="Center" IsEnabled="{Binding InModificationMode}" Unfocused="OnEntryUnfocused"/>
-								</Grid>
-								<Border.GestureRecognizers>
-									<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
-								</Border.GestureRecognizers>
-							</Border>
-						</Grid>
-					</DataTemplate>
-				</CollectionView.ItemTemplate>
-			</CollectionView>
-		</VerticalStackLayout>
+				<CollectionView
+					VerticalScrollBarVisibility="Never"
+					Grid.Row="2"
+					x:DataType="viewModels:ShellViewModel"
+					ItemsSource="{Binding Categories, Mode=TwoWay}">
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="models:FlyoutItemModel">
+							<Grid ColumnDefinitions="*" HorizontalOptions="Fill" RowDefinitions="Auto, Auto">
+								<Border HorizontalOptions="Fill"
+										StrokeThickness="0"
+										Style="{Binding IsActive, Converter={converters:ActiveFlyoutItemConverter}}"
+										x:DataType="models:FlyoutItemModel">
+									<FlyoutBase.ContextFlyout>
+										<MenuFlyout x:DataType="models:FlyoutItemModel">
+											<MenuFlyoutItem Text="Rename" Clicked="MenuFlyoutItem_Clicked" CommandParameter="{Binding CategoryId}" />
+											<MenuFlyoutItem Text="Delete" />
+										</MenuFlyout>
+									</FlyoutBase.ContextFlyout>
+									<Grid ColumnDefinitions="4, Auto, *"
+										  Padding="16, 0"
+										  HorizontalOptions="Start"
+										  VerticalOptions="Center">
+										<BoxView Grid.Column="0"
+												 WidthRequest="4"
+												 MaximumHeightRequest="14"
+												 VerticalOptions="Fill"
+												 CornerRadius="50">
+											<BoxView.Triggers>
+												<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="True">
+													<Setter Property="Color" Value="{AppThemeBinding Light={StaticResource SecondaryDarkText}, Dark={StaticResource PrimaryDark}}" />
+												</DataTrigger>
+												<DataTrigger TargetType="BoxView" Binding="{Binding IsActive}" Value="False">
+													<Setter Property="Color" Value="Transparent" />
+												</DataTrigger>
+											</BoxView.Triggers>
+										</BoxView>
+										<ImageButton Grid.Column="1" Source="{Binding ., Converter={StaticResource MaterialOutlinedIconConverter}}"
+													 Style="{StaticResource FlyoutIconButtonStyle}"
+													 Clicked="CategoryIcon_Tapped" />
+										<controls:BorderlessEntry extensions:ElementExtensions.ChildIdentity="{Binding CategoryId}"
+																  Grid.Column="2"
+																  Text="{Binding Title}"
+																  Style="{StaticResource CategoryNormalStateStyle}"
+																  VerticalOptions="Center"
+																  IsEnabled="{Binding InModificationMode}"
+																  Background="Transparent"
+																  Unfocused="OnEntryUnfocused" />
+									</Grid>
+									<Border.GestureRecognizers>
+										<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
+									</Border.GestureRecognizers>
+								</Border>
+							</Grid>
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+		</Grid>
 	</Shell.FlyoutContent>
 	
 	
 	
 	
-	
 	<Shell.FlyoutFooter>
-		<FlexLayout JustifyContent="SpaceBetween" Padding="4">
+		<FlexLayout JustifyContent="SpaceBetween" Padding="4" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundLight}, Dark={DynamicResource BackgroundDark}}">
 			<Button Style="{DynamicResource AuthButtonStyle}" 
 					x:DataType="viewModels:ShellViewModel" 
 					IsVisible="{Binding IsAuthorized}" 
@@ -168,7 +179,8 @@
 					Clicked="OnSignOutButtonClicked"/>
 			<Button Style="{DynamicResource CustomButtonStyle}"
 					Text="Add" ContentLayout="Left, 6" 
-					ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" />
+					ImageSource="{FontImageSource Glyph={mi:Material Icon=Add}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}"
+					Clicked="AddCategoryButton_Clicked" />
 			<ImageButton Grid.Column="1" Style="{DynamicResource StandAloneIconButtonStyle}"
 						 Source="{FontImageSource Glyph={mi:Material Icon=AddBox, IconBackgroundColor=Transparent, IconSize=24}, Color={AppThemeBinding Light={DynamicResource SecondaryLight}, Dark={DynamicResource SecondaryDark}}}" 
 						 HorizontalOptions="End" />

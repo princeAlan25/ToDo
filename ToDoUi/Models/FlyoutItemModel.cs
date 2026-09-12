@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using ToDoShared.DTOs;
 using ToDoUi.Factories;
 
 namespace ToDoUi.Models;

@@ -1,8 +1,4 @@
-﻿using ToDoUi.Services.Interfaces;
-using ToDoUi.ViewModels;
-using ToDoUi.Views;
-
-namespace ToDoUi;
+﻿namespace ToDoUi;
 
 public partial class App : Application
 {

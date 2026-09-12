@@ -17,7 +17,7 @@ public class AuthService(IConfiguration config, IUserRepository userRepo) : IAut
         if(Validator.ValidateUserSignIn(loginUserRequest) is not null) return Results.BadRequest(Validator.ValidateUserSignIn(loginUserRequest));
         User? user = userRepo.GetUserByEmailAsync(loginUserRequest.Email).Result;
         if (user == null || !Securit.VerifyPassword(loginUserRequest.Password, user.Password)) return Results.Unauthorized();
-        return Results.Ok(new loginResponseDto(GenerateAuthToken(user.UserId, user.Name), "Bearer"));
+        return Results.Ok(new LoginResponseDto(GenerateAuthToken(user.UserId, user.Name), "Bearer"));
     }
 
     public IResult SignUp(SignUpRequestDto createUserRequest)

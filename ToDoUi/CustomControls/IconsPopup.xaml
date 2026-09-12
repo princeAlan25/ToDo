@@ -16,17 +16,26 @@
 		</ResourceDictionary>
 	</toolkit:Popup.Resources>
 
-	<VerticalStackLayout>
-		<SearchBar />
-		<CollectionView FlowDirection="LeftToRight" ItemsSource="{Binding IconsSource}" ItemsLayout="HorizontalGrid, 6">
+	<Grid RowDefinitions="Auto, *"
+		  WidthRequest="420"
+		  HeightRequest="600">
+		<SearchBar Grid.Row="0" TextChanged="SearchBar_TextChanged" />
+		<CollectionView Grid.Row="1" x:Name="iconsCollection"
+						FlowDirection="LeftToRight" 
+						ItemsSource="{Binding IconsSource}" 
+						ItemsLayout="HorizontalGrid, 6"
+						HorizontalOptions="Fill"
+						VerticalOptions="Fill">
 			<CollectionView.ItemTemplate>
-				<DataTemplate x:DataType="x:String">
-					<VerticalStackLayout>
+			<DataTemplate x:DataType="x:String">
+				<Grid WidthRequest="64" HeightRequest="64">
 						<ImageButton Source="{Binding ., Converter={StaticResource MaterialOutlinedIconConverter}}"
+								 WidthRequest="56"
+								 HeightRequest="56"
 									 Style="{StaticResource FlyoutIconButtonStyle}" />
-					</VerticalStackLayout>
-				</DataTemplate>
+				</Grid>
+			</DataTemplate>
 			</CollectionView.ItemTemplate>
 		</CollectionView>
-	</VerticalStackLayout>
+	</Grid>
 </toolkit:Popup>

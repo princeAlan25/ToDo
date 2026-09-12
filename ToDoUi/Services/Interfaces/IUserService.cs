@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ToDoShared.DTOs;
+﻿using ToDoShared.DTOs;
 
 namespace ToDoUi.Services.Interfaces;
 

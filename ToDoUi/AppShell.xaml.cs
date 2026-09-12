@@ -1,11 +1,10 @@
-﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using ToDoUi.CustomControls;
 using ToDoUi.Extensions;
 using ToDoUi.Helpers;
+using ToDoUi.Models;
 using ToDoUi.ViewModels;
 using ToDoUi.Views;
 
@@ -28,7 +27,6 @@ public partial class AppShell : Shell
         {
             if(_viewModel != null)
             {
-                await _viewModel.GetAuthenticatedUserAsync();
                 if(!_viewModel.IsAuthorized)
                 {
                     await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
@@ -36,6 +34,7 @@ public partial class AppShell : Shell
                 else
                 {
                     AccountStatus.BindingContext = _viewModel;
+                    await _viewModel.GetAllCategoriesAsync();
                 }
             }
         });
@@ -45,7 +44,14 @@ public partial class AppShell : Shell
     {
         if (sender is ShellViewModel viewModel)
         {
-            await viewModel.GetAuthenticatedUserAsync();
+            if(e.PropertyName == "IsAuthorized")
+            {
+                await viewModel.GetAuthenticatedUserAsync();
+            }
+            if ((e.PropertyName == "IsAuthorized" || e.PropertyName == "CategoryName") && _viewModel.IsAuthorized)
+            {
+                await _viewModel.GetAllCategoriesAsync();
+            }
         }
     }
 
@@ -61,7 +67,7 @@ public partial class AppShell : Shell
                 await Shell.Current.GoToAsync($"{nameof(LoginPage)}");
             }
         }
-    } 
+    }
 
     private async void OnSignOutButtonClicked(object? sender, EventArgs e)
     {
@@ -84,38 +90,71 @@ public partial class AppShell : Shell
                         }
                     }
                 }
-                _viewModel.SetCategoryFocusState(categoryIdParam, true);
+                _viewModel?.SetCategoryFocusState(categoryIdParam, true);
             }
         }
     }
 
-    private void OnEntryUnfocused(object? sender, FocusEventArgs e)
+    private async void OnEntryUnfocused(object? sender, FocusEventArgs e)
     {
         if(sender is  Entry categoryEntry)
         {
             var categoryId = categoryEntry.GetValue(ElementExtensions.ChildIdentityProperty);
             _viewModel.SetCategoryFocusState((int)categoryId, false);
-        }
-    }
-
-    private async void CategoryIcon_Tapped(object sender, EventArgs e)
-    {
-        if(sender is ImageButton categoryIconButton)
-        {
-            if(categoryIconButton.Parent.Parent.Parent is Grid categoryParentGrid)
+            var categoryEntryParent = FindParent<Border>(categoryEntry);
+            if(categoryEntryParent != null && categoryEntryParent.BindingContext is FlyoutItemModel categoryObj)
             {
-                await ShowCategoryPopup(categoryIconButton, categoryParentGrid);
+                await _viewModel.UpdateCategoryAsync(categoryObj);
             }
         }
     }
 
-    private async Task ShowCategoryPopup(View iconsContainer, View containerParent)
+    private async void CategoryIcon_Tapped(object? sender, EventArgs e)
+    {
+        if(sender is ImageButton categoryIconButton)
+        {
+            if(categoryIconButton.Parent.Parent.Parent != null)
+            {
+                await ShowCategoryPopup();
+            }
+        }
+    }
+
+    private async Task ShowCategoryPopup()
     {
         Popup iconsPopup = new IconsPopup()
         {
             Title = "Category Icons",
-            IconsSource = _viewModel.GetAllMaterialIcons()
+            IconsSource = ShellViewModel.GetAllMaterialIcons()
         };
-        await this.ShowPopupAsync(iconsPopup);
+        if(_viewModel.IsAuthorized)
+        {
+            Dispatcher.Dispatch(async () =>
+            {
+                await this.ShowPopupAsync(iconsPopup);
+            });
+        }
+    }
+
+    private async void AddCategoryButton_Clicked(object? sender, EventArgs e)
+    {
+        if(sender != null)
+        {
+            await _viewModel.CreateCategoryAsync();
+        }
+    }
+
+    static T? FindParent<T>(Element element) where T : Element
+    {
+        var current = element;
+        while(current != null)
+        {
+            if(current is T target)
+            {
+                return target;
+            }
+            current = current.Parent;
+        }
+        return null;
     }
 }

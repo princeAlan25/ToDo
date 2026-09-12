@@ -53,7 +53,7 @@ public partial class LoginViewModel : ObservableValidator, IQueryAttributable
         if(Email != null && Password != null)
         {
             LoginRequestDto request = new(Email, Password);
-            loginResponseDto? result = await _authService.LoginAsync(request);
+            LoginResponseDto? result = await _authService.LoginAsync(request);
             if (result != null)
             {
                 IsAuthorized = true;

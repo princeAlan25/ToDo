@@ -23,13 +23,13 @@ namespace ToDoApi.Repositories
             await _db.SaveChangesAsync();
 
             CategoryDto categoryResponse = new(
-                CategoryId: categoryRequest.CategoryId,
-                Name: categoryRequest.Name,
-                ColorCode: categoryRequest.ColorCode,
-                Description: categoryRequest.Description,
-                CreatedAt: categoryRequest.CreatedAt,
-                UpdatedAt: categoryRequest.UpdatedAt,
-                Tasks: []
+                categoryId: categoryRequest.CategoryId,
+                name: categoryRequest.Name,
+                colorCode: categoryRequest.ColorCode,
+                description: categoryRequest.Description,
+                createdAt: categoryRequest.CreatedAt,
+                updatedAt: categoryRequest.UpdatedAt,
+                tasks: []
             );
             return await Task.FromResult(categoryResponse);
         }
@@ -54,13 +54,13 @@ namespace ToDoApi.Repositories
         {
             List<Category> categories = await _db.Categories.Include(c => c.Tasks).ToListAsync();
             return [..categories.Select(c => new CategoryDto(
-                CategoryId: c.CategoryId,
-                Name: c.Name,
-                ColorCode: c.ColorCode,
-                Description: c.Description!,
-                CreatedAt: c.CreatedAt,
-                UpdatedAt: c.UpdatedAt,
-                Tasks: [..c.Tasks]
+                categoryId: c.CategoryId,
+                name: c.Name,
+                colorCode: c.ColorCode,
+                description: c.Description!,
+                createdAt: c.CreatedAt,
+                updatedAt: c.UpdatedAt,
+                tasks: [..c.Tasks]
             ))];
         }
 
@@ -70,13 +70,13 @@ namespace ToDoApi.Repositories
             if (category == null) return null!;
 
             CategoryDto categoryResponse = new(
-                CategoryId: category.CategoryId,
-                Name: category.Name,
-                ColorCode: category.ColorCode,
-                Description: category.Description!,
-                CreatedAt: category.CreatedAt,
-                UpdatedAt: category.UpdatedAt,
-                Tasks: [..category.Tasks]
+                categoryId: category.CategoryId,
+                name: category.Name,
+                colorCode: category.ColorCode,
+                description: category.Description!,
+                createdAt: category.CreatedAt,
+                updatedAt: category.UpdatedAt,
+                tasks: [..category.Tasks]
             );
             return Task.FromResult<CategoryDto?>(categoryResponse);
         }
@@ -95,13 +95,13 @@ namespace ToDoApi.Repositories
             return updatedCategory == null
                 ? throw new InvalidOperationException("Category to be updated not found or Updating ")
                 : await Task.FromResult(new CategoryDto(
-                CategoryId: updatedCategory.CategoryId,
-                Name: updatedCategory.Name,
-                ColorCode: updatedCategory.ColorCode,
-                Description: updatedCategory.Description!,
-                CreatedAt: updatedCategory.CreatedAt,
-                UpdatedAt: updatedCategory.UpdatedAt,
-                Tasks: [..updatedCategory.Tasks]
+                categoryId: updatedCategory.CategoryId,
+                name: updatedCategory.Name,
+                colorCode: updatedCategory.ColorCode,
+                description: updatedCategory.Description!,
+                createdAt: updatedCategory.CreatedAt,
+                updatedAt: updatedCategory.UpdatedAt,
+                tasks: [..updatedCategory.Tasks]
             ));
         }
     }

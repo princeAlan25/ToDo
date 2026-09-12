@@ -8,9 +8,9 @@ public class AuthenticationService(IApiClient apiClient, ITokenService tokenServ
 {
     private readonly IApiClient _apiClient = apiClient;
     public readonly ITokenService _tokenService = tokenService;
-    public async Task<loginResponseDto?> LoginAsync(LoginRequestDto loginRequest)
+    public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto loginRequest)
     {
-        var response = await _apiClient.PostAsync<LoginRequestDto, loginResponseDto>("/auth/login", loginRequest);
+        var response = await _apiClient.PostAsync<LoginRequestDto, LoginResponseDto>("/auth/login", loginRequest);
         if(response is not null)
         {
             await _tokenService.SetAccessTokenAsync(response.AccessToken);

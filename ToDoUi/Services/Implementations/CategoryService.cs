@@ -10,26 +10,26 @@ public class CategoryService(IApiClient apiClient) : ICategoryService
 
     public async Task<CategoryDto?> CreateCategoryAsync(CreateCategoryDto category)
     {
-        return await _apiClient.PostAsync<CreateCategoryDto, CategoryDto>("/users",category);
+        return await _apiClient.PostAsync<CreateCategoryDto, CategoryDto>("/categories", category);
     }
 
     public async Task<bool> DeleteCategoryAsync(int categoryId)
     {
-        return await _apiClient.DeleteAsync<int, bool>("/users", categoryId);
+        return await _apiClient.DeleteAsync<int, bool>("/categories", categoryId);
     }
 
     public async Task<List<CategoryDto>?> GetCategoriesAsync()
     {
-        return await _apiClient.GetAsync<List<CategoryDto>>("/users");
+        return await _apiClient.GetAsync<List<CategoryDto>>("/categories");
     }
 
     public async Task<CategoryDto?> GetCategoryById(int categoryId)
     {
-        return await _apiClient.GetAsync<CategoryDto>($"/users/{categoryId}");
+        return await _apiClient.GetAsync<CategoryDto>($"/categories/{categoryId}");
     }
 
     public async Task<CategoryDto?> UpdateCategoryAsync(UpdateCategoryDto category)
     {
-        return await _apiClient.PutAsync<UpdateCategoryDto, CategoryDto>("/users", category);
+        return await _apiClient.PutAsync<UpdateCategoryDto, CategoryDto>("/categories", category);
     }
 }

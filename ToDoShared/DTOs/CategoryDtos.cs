@@ -2,17 +2,19 @@
 
 namespace ToDoShared.DTOs;
 
-public record CategoryDto(
-    int? CategoryId,
-    string Name,
-    string ColorCode,
-    string Description,
-    DateTime CreatedAt,
-    DateTime UpdatedAt,
-    List<TaskItem> Tasks
-) {
-    List<TaskItem> Tasks { get; init; } = Tasks ?? [];
-    int ReferencedTasksCount => Tasks.Count;
+using System.Text.Json.Serialization;
+
+//[method: JsonConstructor]
+public class CategoryDto(int? categoryId, string name, string colorCode, string description, DateTime createdAt, DateTime updatedAt, List<TaskItem> tasks)
+{
+    public int? CategoryId { get; set; } = categoryId;
+    public string Name { get; set; } = name;
+    public string ColorCode { get; set; } = colorCode;
+    public string Description { get; set; } = description;
+    public DateTime CreatedAt { get; set; } = createdAt;
+    public DateTime UpdatedAt { get; set; } = updatedAt;
+    public List<TaskItem> Tasks { get; set; } = tasks ?? [];
+    public int ReferencedTasksCount => Tasks?.Count ?? 0;
 }
 
 public record CreateCategoryDto(
