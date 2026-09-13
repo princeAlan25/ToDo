@@ -1,5 +1,7 @@
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls.Internals;
+using System.Collections;
 using System.ComponentModel;
 using ToDoUi.CustomControls;
 using ToDoUi.Extensions;
@@ -141,7 +143,14 @@ public partial class AppShell : Shell
     {
         if(sender != null)
         {
-            await _viewModel.CreateCategoryAsync();
+            bool categoriesReady = await _viewModel.CreateCategoryAsync();
+            if(categoriesReady)
+            {
+                if (categoriesCollectionView.ItemsSource is IList categoriesCollection)
+                {
+                    categoriesCollectionView.ScrollTo(categoriesCollection.Count - 1);
+                }
+            }
         }
     }
 

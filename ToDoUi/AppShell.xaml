@@ -95,7 +95,8 @@
 
 							</Grid>
 							<Border.GestureRecognizers>
-								<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
+								<TapGestureRecognizer Command="{Binding Source={x:Reference shell}, Path=BindingContext.SetFlyoutItemStateCommand}" 
+													  CommandParameter="{Binding .}" />
 							</Border.GestureRecognizers>
 						</Border>
 					</DataTemplate>
@@ -105,8 +106,9 @@
 			<!--separator-->
 			<Border Grid.Row="1" StrokeThickness="0.2" Margin="0,4" />
 
-			<!--Categories Dynamic FlyoutItems-->
+			<!--Dynamic Categories FlyoutItems-->
 				<CollectionView
+					x:Name="categoriesCollectionView"
 					VerticalScrollBarVisibility="Never"
 					Grid.Row="2"
 					x:DataType="viewModels:ShellViewModel"
@@ -155,7 +157,8 @@
 																  Unfocused="OnEntryUnfocused" />
 									</Grid>
 									<Border.GestureRecognizers>
-										<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:ShellViewModel}}, Path=SetFlyoutItemStateCommand}" CommandParameter="{Binding .}" />
+										<TapGestureRecognizer Command="{Binding Source={x:Reference shell}, Path=BindingContext.SetFlyoutItemStateCommand}" 
+															  CommandParameter="{Binding .}" />
 									</Border.GestureRecognizers>
 								</Border>
 							</Grid>
