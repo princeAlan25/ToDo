@@ -29,7 +29,7 @@ public partial class IconsPopup : Popup
 		BindingContext = this;
 	}
 
-    private async void SearchBar_TextChanged(object? sender, TextChangedEventArgs e)
+    private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
         _debounceTokenSource?.Cancel();
         _debounceTokenSource = new();

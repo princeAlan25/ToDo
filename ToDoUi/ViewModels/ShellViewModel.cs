@@ -202,7 +202,12 @@ public partial class ShellViewModel : ObservableObject
                 Categories.Add(categoryItem);
             }
         }
-    }   
+    }
+
+    public void ResetCategoriesList()
+    {
+        Categories = [];
+    }
 
     public static ObservableCollection<string> GetAllMaterialIcons()
     {
@@ -236,21 +241,11 @@ public partial class ShellViewModel : ObservableObject
 
     public async Task UpdateCategoryAsync(FlyoutItemModel category)
     {
-        foreach(FlyoutItemModel ct in Categories)
+        UpdateCategoryDto request = new(category.CategoryId ?? 0, category.Title, category.IconColor.ToString(), "Category Updated");
+        var response = await _categoryService.UpdateCategoryAsync(request);
+        if (response != null)
         {
-            if(ct.CategoryId == category.CategoryId && ct.Title != category.Title)
-            {
-                UpdateCategoryDto request = new(category.CategoryId ?? 0, category.Title, category.IconColor.ToString(), "Category Updated");
-                var response = await _categoryService.UpdateCategoryAsync(request);
-                if (response != null)
-                {
-                    await GetAllCategoriesAsync();
-                }
-            }
-            else
-            {
-                continue;
-            }
+            await GetAllCategoriesAsync();
         }
     }
 }

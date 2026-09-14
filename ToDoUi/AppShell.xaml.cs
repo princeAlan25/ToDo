@@ -48,6 +48,11 @@ public partial class AppShell : Shell
             if(e.PropertyName == "IsAuthorized")
             {
                 await viewModel.GetAuthenticatedUserAsync();
+                if(!viewModel.IsAuthorized)
+                {
+                    categoriesCollectionView.ItemsSource = null;
+                    _viewModel.ResetCategoriesList();
+                }
             }
             if ((e.PropertyName == "IsAuthorized" || e.PropertyName == "CategoryName") && _viewModel.IsAuthorized)
             {
