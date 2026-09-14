@@ -7,29 +7,20 @@ namespace ToDoUi.CustomControls;
 public partial class IconsPopup : Popup
 {
     private CancellationTokenSource _debounceTokenSource = new();
-	public static BindableProperty TitleProperty =
-		BindableProperty.Create("Title", typeof(string), typeof(IconsPopup), "Popup Title");
+	public static readonly BindableProperty TitleProperty =
+		BindableProperty.Create(nameof(Title), typeof(string), typeof(IconsPopup), "Popup Title");
 	public string Title
 	{
 		get => (string)GetValue(TitleProperty);
 		set => SetValue(TitleProperty, value);
 	}
 
-    public static BindableProperty IconsSourceProperty =
-    BindableProperty.Create("IconsSource", typeof(ObservableCollection<string>), typeof(IconsPopup), new ObservableCollection<string>());
+    public static readonly BindableProperty IconsSourceProperty =
+    BindableProperty.Create(nameof(IconsSource), typeof(ObservableCollection<string>), typeof(IconsPopup), new ObservableCollection<string>());
     public ObservableCollection<string> IconsSource
     {
         get => (ObservableCollection<string>)GetValue(IconsSourceProperty);
         set => SetValue(IconsSourceProperty, value);
-    }
-
-    public static BindableProperty ScrolledToBottomProperty =
-    BindableProperty.Create("IconsSource", typeof(EventHandler), typeof(IconsPopup), null);
-    
-    public EventHandler ScrolledToBottom
-    {
-        get => (EventHandler)GetValue(ScrolledToBottomProperty);
-        set => SetValue(ScrolledToBottomProperty, value);
     }
 
     public IconsPopup()
@@ -38,7 +29,7 @@ public partial class IconsPopup : Popup
 		BindingContext = this;
 	}
 
-    private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    private async void SearchBar_TextChanged(object? sender, TextChangedEventArgs e)
     {
         _debounceTokenSource?.Cancel();
         _debounceTokenSource = new();

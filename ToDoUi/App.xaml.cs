@@ -5,7 +5,7 @@ public partial class App : Application
     private Color _bgThemeMode = Color.FromArgb("#FFFBF8FF");
     private Color _fgThemeMode = Color.FromArgb("#FF1A1B21");
     private readonly string _icon = "apptitleicon.png";
-    private Window _window;
+    private readonly Window _window;
     private readonly AppShell _shell;
     public App(AppShell shell)
     {

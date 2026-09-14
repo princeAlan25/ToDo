@@ -86,8 +86,6 @@ public partial class ShellViewModel : ObservableObject
     public partial string? Email { get; set; } = "example@gmail.com";
     [ObservableProperty]
     public partial bool IsAuthorized { get; set; } = false;
-    [ObservableProperty]
-    public partial bool ActivateIconsSelector { get; set; }
 
     [ObservableProperty]
     public partial string CategoryName { get; set; } = "Unitled";
@@ -143,10 +141,6 @@ public partial class ShellViewModel : ObservableObject
         }
     }
 
-    public void ToggleIconsSelector()
-    {
-        ActivateIconsSelector = !ActivateIconsSelector;
-    }
 
     public void SetCategoryFocusState(int categoryId, bool inFocusMode)
     {

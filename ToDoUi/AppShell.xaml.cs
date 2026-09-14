@@ -1,6 +1,5 @@
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Controls.Internals;
 using System.Collections;
 using System.ComponentModel;
 using ToDoUi.CustomControls;
@@ -19,7 +18,6 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         AppShellHelper.RegisterRoutes();
-
         _viewModel = viewModel;
         BindingContext = _viewModel;
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -83,7 +81,8 @@ public partial class AppShell : Shell
         {
             if(menuFlyoutItem.Text == "Rename" && menuFlyoutItem.CommandParameter is int categoryIdParam)
             {
-                if(menuFlyoutItem.Parent.Parent is Border categoryBorder)
+                var menuParentElement = FindParent<Border>(menuFlyoutItem);
+                if(menuParentElement is Border categoryBorder)
                 {
                     if(categoryBorder.Content is Grid categoryGrid)
                     {

@@ -17,7 +17,6 @@
 			AlignItems="Center">
 
 			<Image Source="todoapplogo.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="Center" />
-			<Label Text="TaskSpace Login" TextColor="RoyalBlue" />
 
 			<VerticalStackLayout>
 				<FlexLayout Direction="Column" 

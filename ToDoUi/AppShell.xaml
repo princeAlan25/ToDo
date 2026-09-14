@@ -23,9 +23,6 @@
 		</ResourceDictionary>
 	</Shell.Resources>
 
-	
-	
-	
 	<Shell.FlyoutHeader>
 		<Grid x:Name="AccountStatus" 
 			  x:DataType="viewModels:ShellViewModel" 
@@ -167,10 +164,10 @@
 				</CollectionView>
 		</Grid>
 	</Shell.FlyoutContent>
-	
-	
-	
-	
+
+
+
+
 	<Shell.FlyoutFooter>
 		<FlexLayout JustifyContent="SpaceBetween" Padding="4" BackgroundColor="{AppThemeBinding Light={DynamicResource BackgroundLight}, Dark={DynamicResource BackgroundDark}}">
 			<Button Style="{DynamicResource AuthButtonStyle}" 

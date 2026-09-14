@@ -6,25 +6,29 @@ using ToDoUi.Services.Interfaces;
 
 namespace ToDoUi.ViewModels;
 
-public partial class SignUpViewModel(IAuthenticationService authService) : ObservableValidator
+public partial class SignUpViewModel : ObservableValidator
 {
-    private readonly IAuthenticationService _authService = authService;
-
+    private readonly IAuthenticationService _authService;
+    public SignUpViewModel(IAuthenticationService authService)
+    {
+        _authService = authService;
+        ValidateAllProperties();
+    }
     [ObservableProperty]
     [EmailAddress(ErrorMessage = "Invalid Email.")]
     [Required(ErrorMessage = "Email field is required.")]
     [NotifyPropertyChangedFor(nameof(EmailError), nameof(HasEmailError))]
-    public partial string Email { get; set; }
+    public partial string Email { get; set; } = "";
     [ObservableProperty]
     [MinLength(3, ErrorMessage = "Username should have Three characters long required.")]
     [Required(ErrorMessage = "Username field is required.")]
     [NotifyPropertyChangedFor(nameof(UserNameError), nameof(HasUserNameError))]
-    public partial string UserName { get; set; }
+    public partial string UserName { get; set; } = "";
     [ObservableProperty]
     [Required(ErrorMessage = "Password field is required.")]
     [MinLength(8, ErrorMessage = "Password should have 8 Characters long.")]
     [NotifyPropertyChangedFor(nameof(PasswordError), nameof(HasPasswordError))]
-    public partial string Password { get; set; }
+    public partial string Password { get; set; } = "";
     [ObservableProperty]
     public partial Dictionary<string, object>? LoginPayLoad { get; set; }
 
